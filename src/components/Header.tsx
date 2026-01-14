@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll,  AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 const navLinks = [{
   name: 'Home',
@@ -45,7 +45,7 @@ export function Header() {
     }}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <Link to="/" className="relative z-50 group">
-            <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${isScrolled || isMobileMenuOpen ? 'text-white' : 'text-[#0F2E52]'}`}>
+            <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${isScrolled || isMobileMenuOpen ? 'text-white' : 'text-[#1296db]'}`}>
               PANJA
             </span>
             <span className={`block h-0.5 bg-[#2098D0] transition-all duration-300 w-0 group-hover:w-full`} />
@@ -54,7 +54,7 @@ export function Header() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map(link => <Link key={link.path} to={link.path} className="relative group">
-                <span className={`text-sm font-medium tracking-wide transition-colors duration-300 ${isScrolled ? 'text-white/90 hover:text-white' : 'text-[#0F2E52]/90 hover:text-[#0F2E52]'}`}>
+                <span className={`text-sm font-medium tracking-wide transition-colors duration-300 ${isScrolled ? 'text-white/90 hover:text-white' : 'text-[#1296db] hover:text-[#1296db]'}`}>
                   {link.name}
                 </span>
                 {location.pathname === link.path && <motion.div layoutId="activeNav" className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#2098D0]" transition={{
