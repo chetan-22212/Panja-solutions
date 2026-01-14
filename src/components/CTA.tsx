@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { MagneticButton } from './ui/MagneticButton';
 import { motion } from 'framer-motion';
 export function CTA() {
@@ -24,7 +24,7 @@ export function CTA() {
           Let's engineer your next digital breakthrough together.
         </p>
 
-        <MagneticButton className="bg-white text-[#0F2E52] hover:bg-[#95C1D9] px-12 py-6 text-lg">
+        <MagneticButton className=" text-[#0F2E52] hover:bg-[#95C1D9] px-12 py-6 text-lg">
           Start the Conversation
         </MagneticButton>
       </motion.div>

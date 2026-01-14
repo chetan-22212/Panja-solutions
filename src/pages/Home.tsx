@@ -1,11 +1,11 @@
-import React from 'react';
+// import React from 'react';
 import { Hero } from '../components/Hero';
-import { FeaturedServices } from '../components/FeaturedServices';
-import { Capabilities } from '../components/Capabilities';
+import  FeaturedServices  from '../components/FeaturedServices';
+import  Capabilities  from '../components/Capabilities';
 import { Impact } from '../components/Impact';
 import { Process } from '../components/Process';
 import { CaseStories } from '../components/CaseStories';
-import { Trust } from '../components/Trust';
+import  Trust  from '../components/Trust';
 import { CTA } from '../components/CTA';
 import { motion } from 'framer-motion';
 export function Home() {
