@@ -134,9 +134,9 @@ export default function Trust() {
           <div className="flex items-center justify-center gap-4 mt-12">
             <button
               onClick={prevTestimonial}
-              className="group w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-white/20 flex items-center justify-center hover:border-[#95C1D9] hover:bg-white transition-all duration-300"
+              className="group w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-[#0F2E52]/20 flex items-center justify-center hover:border-[#2098D0] hover:bg-[#2098D0] transition-all duration-300"
             >
-              <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:text-[#0F2E52] transition-colors" />
+              <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 text-[#0F2E52] group-hover:text-white transition-colors" />
             </button>
 
             {/* Dots Indicator */}
@@ -147,8 +147,8 @@ export default function Trust() {
                   onClick={() => setActiveIndex(index)}
                   className={`transition-all duration-300 rounded-full ${
                     index === activeIndex
-                      ? 'w-8 h-2 bg-white'
-                      : 'w-2 h-2 bg-white/30 hover:bg-white/50'
+                      ? 'w-8 h-2 bg-[#2098D0]'
+                      : 'w-2 h-2 bg-[#0F2E52]/20 hover:bg-[#0F2E52]/40'
                   }`}
                 />
               ))}
@@ -156,9 +156,9 @@ export default function Trust() {
 
             <button
               onClick={nextTestimonial}
-              className="group w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-white/20 flex items-center justify-center hover:border-[#95C1D9] hover:bg-white transition-all duration-300"
+              className="group w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-[#0F2E52]/20 flex items-center justify-center hover:border-[#2098D0] hover:bg-[#2098D0] transition-all duration-300"
             >
-              <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:text-[#0F2E52] transition-colors" />
+              <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-[#0F2E52] group-hover:text-white transition-colors" />
             </button>
           </div>
         </div>
