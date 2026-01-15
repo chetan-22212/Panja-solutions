@@ -3,7 +3,7 @@ import { Hero } from '../components/Hero';
 import  FeaturedServices  from '../components/FeaturedServices';
 import  Capabilities  from '../components/Capabilities';
 import { Impact } from '../components/Impact';
-import { Process } from '../components/Process';
+import  Process  from '../components/Process';
 import { CaseStories } from '../components/CaseStories';
 import  Trust  from '../components/Trust';
 import { CTA } from '../components/CTA';
