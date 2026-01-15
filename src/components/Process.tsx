@@ -1,4 +1,4 @@
-import  { useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
@@ -83,7 +83,7 @@ export default function Process() {
           {/* Animated Progress Line */}
           <motion.div 
             style={{ height: lineHeight }}
-            className="absolute left-1/2 top-0 w-[2px] bg-gradient-to-b from-[#2098D0] to-[#95C1D9] -translate-x-1/2"
+            className="absolute left-1/2 top-0 w-[2px] bg-gradient-to-b from-[#0F2E52] to-[#255490] -translate-x-1/2"
           />
 
           <div className="space-y-32">
@@ -107,22 +107,30 @@ export default function Process() {
                   {/* Content Card */}
                   <div className={`flex-1 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
                     <div className="inline-block">
-                      <div className="bg-white border-2 border-[#213d5c]/10 rounded-2xl p-8 hover:border-[#213d5c]/30 hover:shadow-xl transition-all duration-300 group">
-                        <div className={`flex items-center gap-4 mb-4 ${
+                      <div className="relative bg-white border-2 border-[#0F2E52]/10 rounded-2xl p-8 hover:border-[#0F2E52]/30 hover:shadow-2xl transition-all duration-300 group overflow-hidden">
+                        {/* Gradient Overlay on Hover */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#0F2E52]/0 via-[#255490]/0 to-[#0F2E52]/0 group-hover:from-[#0F2E52]/5 group-hover:via-[#255490]/5 group-hover:to-[#0F2E52]/5 transition-all duration-500 rounded-2xl" />
+                        
+                        {/* Corner Accent */}
+                        <div className={`absolute top-0 w-20 h-20 bg-gradient-to-br from-[#0F2E52]/10 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                          index % 2 === 0 ? 'right-0' : 'left-0 rotate-90'
+                        }`} />
+                        
+                        <div className={`relative flex items-center gap-4 mb-4 ${
                           index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'
                         }`}>
-                          <div className="text-5xl font-bold text-[#213d5c]/20">
+                          <div className="text-5xl font-bold text-[#0F2E52]/20 group-hover:text-[#0F2E52]/30 transition-colors duration-300">
                             {step.number}
                           </div>
-                          <div className="h-12 w-[2px] bg-[#2098D0]/20" />
+                          <div className="h-12 w-[2px] bg-[#0F2E52]/20 group-hover:bg-[#0F2E52]/40 transition-colors duration-300" />
                           <h3 className="text-3xl font-bold text-[#0F2E52]">
                             {step.title}
                           </h3>
                         </div>
-                        <p className="text-[#255490] text-lg mb-3">
+                        <p className="relative text-[#255490] text-lg mb-3">
                           {step.desc}
                         </p>
-                        <p className="text-[#255490]/60 text-sm">
+                        <p className="relative text-[#255490]/60 text-sm">
                           {step.details}
                         </p>
                       </div>
@@ -138,11 +146,11 @@ export default function Process() {
                       transition={{ duration: 0.4, delay: index * 0.1 + 0.3 }}
                       className="relative"
                     >
-                      <div className="w-16 h-16 rounded-full bg-white border-4 border-[#2098D0] shadow-lg flex items-center justify-center">
-                        <CheckCircle2 className="w-8 h-8 text-[#213d5c]" />
+                      <div className="w-16 h-16 rounded-full bg-white border-4 border-[#0F2E52] shadow-lg flex items-center justify-center">
+                        <CheckCircle2 className="w-8 h-8 text-[#0F2E52]" />
                       </div>
                       {/* Pulse Effect */}
-                      <div className="absolute inset-0 rounded-full border-4 border-[#2098D0] animate-ping opacity-20" />
+                      <div className="absolute inset-0 rounded-full border-4 border-[#0F2E52] animate-ping opacity-20" />
                     </motion.div>
                   </div>
 
@@ -167,7 +175,7 @@ export default function Process() {
             >
               {/* Connector Line */}
               {index < steps.length - 1 && (
-                <div className="absolute left-8 top-20 bottom-0 w-[2px] bg-gradient-to-b from-[#2098D0] to-[#2098D0]/20 -translate-x-1/2" />
+                <div className="absolute left-8 top-20 bottom-0 w-[2px] bg-gradient-to-b from-[#0F2E52] to-[#255490]/20 -translate-x-1/2" />
               )}
 
               <div className="flex gap-4">
@@ -181,21 +189,29 @@ export default function Process() {
                 </div>
 
                 {/* Content Card */}
-                <div className="flex-1 bg-white border-2 border-[#0F2E52]/10 rounded-2xl p-6 hover:border-[#2098D0]/30 hover:shadow-lg transition-all duration-300">
-                  <h3 className="text-2xl font-bold text-[#0F2E52] mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-[#255490] mb-3">
-                    {step.desc}
-                  </p>
-                  <p className="text-[#255490]/60 text-sm">
-                    {step.details}
-                  </p>
+                <div className="flex-1 relative bg-white border-2 border-[#0F2E52]/10 rounded-2xl p-6 hover:border-[#0F2E52]/30 hover:shadow-2xl transition-all duration-300 group overflow-hidden">
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#0F2E52]/0 to-[#255490]/0 group-hover:from-[#0F2E52]/5 group-hover:to-[#255490]/5 transition-all duration-500" />
                   
-                  {/* Arrow Indicator */}
-                  <div className="mt-4 flex items-center gap-2 text-[#2098D0] text-sm font-semibold">
-                    <span>Learn More</span>
-                    <ArrowRight className="w-4 h-4" />
+                  {/* Decorative Corner */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-[#0F2E52]/10 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className="relative">
+                    <h3 className="text-2xl font-bold text-[#0F2E52] mb-2">
+                      {step.title}
+                    </h3>
+                    <p className="text-[#255490] mb-3">
+                      {step.desc}
+                    </p>
+                    <p className="text-[#255490]/60 text-sm mb-4">
+                      {step.details}
+                    </p>
+                    
+                    {/* Arrow Indicator */}
+                    <div className="flex items-center gap-2 text-[#0F2E52] text-sm font-semibold group-hover:text-[#255490] transition-colors duration-300">
+                      <span>Learn More</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    </div>
                   </div>
                 </div>
               </div>
