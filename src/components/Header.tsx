@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import blue_logo from "../assets/logo_panja.png";
 import white_logo from "../assets/colored-logo.png"
+import blue_logo from "../assets/logo_panja.png"
 const navLinks = [{
   name: 'Home',
   path: '/'
@@ -36,6 +36,8 @@ export function Header() {
     });
     return () => unsubscribe();
   }, [scrollY]);
+
+  const logoSrc = isScrolled ? white_logo : ["/solutions", "/about"].includes(location.pathname)?blue_logo:white_logo;
   return <>
     <motion.header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[#0F2E52]/80 backdrop-blur-md py-4 shadow-lg' : 'bg-transparent py-6'}`} initial={{
       y: -100
@@ -48,9 +50,8 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <Link to="/" className="relative z-50 group">
           <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${isScrolled || isMobileMenuOpen ? 'text-white' : 'text-[#1296db]'}`}>
-            <img src={ white_logo} className={"h-16 w-24"} />
+            <img src={logoSrc} className={"h-16 w-24"} />
           </span>
-          <span className={`block h-0.5 bg-[#2098D0] transition-all duration-300 w-0 group-hover:w-full`} />
         </Link>
 
         {/* Desktop Nav */}
