@@ -1,81 +1,232 @@
-import React, { useRef } from 'react';
+import  { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-const steps = [{
-  title: 'Discover',
-  desc: 'Deep dive into ecosystem requirements'
-}, {
-  title: 'Design',
-  desc: 'Architecting the visual and technical blueprint'
-}, {
-  title: 'Build',
-  desc: 'Precision engineering with modern stacks'
-}, {
-  title: 'Launch',
-  desc: 'Seamless deployment and market entry'
-}, {
-  title: 'Scale',
-  desc: 'Optimization for global growth'
-}];
-export function Process() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const {
-    scrollYProgress
-  } = useScroll({
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
+
+const steps = [
+  {
+    number: '01',
+    title: 'Discover',
+    desc: 'Deep dive into ecosystem requirements',
+    details: 'Research, competitor analysis, stakeholder interviews'
+  },
+  {
+    number: '02',
+    title: 'Design',
+    desc: 'Architecting the visual and technical blueprint',
+    details: 'Wireframes, prototypes, design systems'
+  },
+  {
+    number: '03',
+    title: 'Build',
+    desc: 'Precision engineering with modern stacks',
+    details: 'Agile development, code reviews, testing'
+  },
+  {
+    number: '04',
+    title: 'Launch',
+    desc: 'Seamless deployment and market entry',
+    details: 'Deployment, monitoring, performance optimization'
+  },
+  {
+    number: '05',
+    title: 'Scale',
+    desc: 'Optimization for global growth',
+    details: 'Analytics, iteration, continuous improvement'
+  }
+];
+
+export default function Process() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start center', 'end center']
   });
-  return <section className="py-32 px-4 bg-[#FEFEFE] relative overflow-hidden">
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-20 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#0F2E52] mb-6">
-            The Process
-          </h2>
-          <p className="text-[#255490] max-w-2xl mx-auto">
-            A systematic approach to digital evolution.
-          </p>
+
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+
+  return (
+    <section className="py-20 md:py-32 px-4 bg-gradient-to-b from-[#FEFEFE] to-[#F8FBFD] relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-20 right-0 w-96 h-96 bg-[#2098D0]/5 rounded-full blur-[100px]" />
+      <div className="absolute bottom-20 left-0 w-96 h-96 bg-[#95C1D9]/5 rounded-full blur-[100px]" />
+
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="mb-16 md:mb-20 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center gap-2 mb-4">
+              <div className="h-[2px] w-8 bg-[#2098D0]" />
+              <p className="text-[#2098D0] font-bold tracking-widest uppercase text-xs">
+                Our Approach
+              </p>
+              <div className="h-[2px] w-8 bg-[#2098D0]" />
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold text-[#0F2E52] mb-4">
+              The Journey
+            </h2>
+            <p className="text-[#255490]/70 text-lg max-w-2xl mx-auto">
+              A systematic approach to transforming ideas into impactful digital experiences
+            </p>
+          </motion.div>
         </div>
 
-        <div ref={containerRef} className="relative">
-          {/* Connecting Line */}
-          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-[#0F2E52]/10 -translate-x-1/2" />
+        {/* Desktop Version - Zigzag Timeline */}
+        <div ref={containerRef} className="relative hidden md:block">
+          {/* Background Line */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-[#0F2E52]/10 -translate-x-1/2" />
+          
+          {/* Animated Progress Line */}
+          <motion.div 
+            style={{ height: lineHeight }}
+            className="absolute left-1/2 top-0 w-[2px] bg-gradient-to-b from-[#2098D0] to-[#95C1D9] -translate-x-1/2"
+          />
 
-          <motion.div style={{
-          scaleY: scrollYProgress
-        }} className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-[#2098D0] -translate-x-1/2 origin-top" />
+          <div className="space-y-32">
+            {steps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="relative"
+              >
+                {/* Connecting Line to Center */}
+                <div className={`absolute top-1/2 w-24 h-[2px] bg-[#0F2E52]/10 ${
+                  index % 2 === 0 ? 'left-1/2 ml-5' : 'right-1/2 mr-5'
+                }`} />
 
-          <div className="space-y-24">
-            {steps.map((step, index) => <motion.div key={index} initial={{
-            opacity: 0,
-            y: 50
-          }} whileInView={{
-            opacity: 1,
-            y: 0
-          }} viewport={{
-            once: true,
-            margin: '-100px'
-          }} transition={{
-            duration: 0.6
-          }} className={`flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-16 relative ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-                {/* Content */}
-                <div className={`flex-1 ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
-                  <h3 className="text-3xl font-bold text-[#0F2E52] mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-[#255490]/80 text-lg">{step.desc}</p>
+                <div className={`flex items-center gap-24 ${
+                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                }`}>
+                  {/* Content Card */}
+                  <div className={`flex-1 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
+                    <div className="inline-block">
+                      <div className="bg-white border-2 border-[#213d5c]/10 rounded-2xl p-8 hover:border-[#213d5c]/30 hover:shadow-xl transition-all duration-300 group">
+                        <div className={`flex items-center gap-4 mb-4 ${
+                          index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'
+                        }`}>
+                          <div className="text-5xl font-bold text-[#213d5c]/20">
+                            {step.number}
+                          </div>
+                          <div className="h-12 w-[2px] bg-[#2098D0]/20" />
+                          <h3 className="text-3xl font-bold text-[#0F2E52]">
+                            {step.title}
+                          </h3>
+                        </div>
+                        <p className="text-[#255490] text-lg mb-3">
+                          {step.desc}
+                        </p>
+                        <p className="text-[#255490]/60 text-sm">
+                          {step.details}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Center Node */}
+                  <div className="relative z-10 flex-shrink-0">
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 + 0.3 }}
+                      className="relative"
+                    >
+                      <div className="w-16 h-16 rounded-full bg-white border-4 border-[#2098D0] shadow-lg flex items-center justify-center">
+                        <CheckCircle2 className="w-8 h-8 text-[#213d5c]" />
+                      </div>
+                      {/* Pulse Effect */}
+                      <div className="absolute inset-0 rounded-full border-4 border-[#2098D0] animate-ping opacity-20" />
+                    </motion.div>
+                  </div>
+
+                  {/* Spacer */}
+                  <div className="flex-1" />
                 </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
 
-                {/* Node */}
-                <div className="relative z-10 flex-shrink-0">
-                  <div className="w-10 h-10 rounded-full bg-[#FEFEFE] border-4 border-[#2098D0] shadow-lg flex items-center justify-center">
-                    <div className="w-3 h-3 rounded-full bg-[#0F2E52]" />
+        {/* Mobile Version - Vertical Cards */}
+        <div className="md:hidden space-y-6">
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="relative"
+            >
+              {/* Connector Line */}
+              {index < steps.length - 1 && (
+                <div className="absolute left-8 top-20 bottom-0 w-[2px] bg-gradient-to-b from-[#2098D0] to-[#2098D0]/20 -translate-x-1/2" />
+              )}
+
+              <div className="flex gap-4">
+                {/* Number Badge */}
+                <div className="flex-shrink-0 relative z-10">
+                  <div className="w-16 h-16 rounded-2xl bg-[#0F2E52] flex items-center justify-center shadow-lg">
+                    <span className="text-white font-bold text-lg">
+                      {step.number}
+                    </span>
                   </div>
                 </div>
 
-                {/* Spacer for layout balance */}
-                <div className="flex-1 hidden md:block" />
-              </motion.div>)}
-          </div>
+                {/* Content Card */}
+                <div className="flex-1 bg-white border-2 border-[#0F2E52]/10 rounded-2xl p-6 hover:border-[#2098D0]/30 hover:shadow-lg transition-all duration-300">
+                  <h3 className="text-2xl font-bold text-[#0F2E52] mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-[#255490] mb-3">
+                    {step.desc}
+                  </p>
+                  <p className="text-[#255490]/60 text-sm">
+                    {step.details}
+                  </p>
+                  
+                  {/* Arrow Indicator */}
+                  <div className="mt-4 flex items-center gap-2 text-[#2098D0] text-sm font-semibold">
+                    <span>Learn More</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-16 md:mt-24 text-center"
+        >
+          <div className="inline-flex flex-col md:flex-row items-center gap-6 bg-white border-2 border-[#0F2E52]/10 rounded-2xl p-8 hover:border-[#2098D0]/30 transition-colors duration-300">
+            <div className="text-left">
+              <h4 className="text-xl font-bold text-[#0F2E52] mb-2">
+                Ready to start your journey?
+              </h4>
+              <p className="text-[#255490]/70">
+                Let's discuss how we can bring your vision to life
+              </p>
+            </div>
+            <button className="px-8 py-4 bg-[#0F2E52] text-white font-semibold rounded-xl hover:bg-[#255490] transition-colors duration-300 flex items-center gap-2 whitespace-nowrap">
+              Start Your Project
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+        </motion.div>
       </div>
-    </section>;
+    </section>
+  );
 }
