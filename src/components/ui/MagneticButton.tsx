@@ -52,7 +52,7 @@ export function MagneticButton({
     stiffness: 150,
     damping: 15,
     mass: 0.1
-  }} onClick={onClick} className={`relative group overflow-hidden rounded-full px-8 py-4 bg-[#2098D0] text-white font-medium tracking-wide transition-colors hover:bg-[#255490] ${className}`}>
+  }} onClick={onClick} className={`relative group overflow-hidden rounded-full px-8 py-4 bg-[#2098D0] text-black hover:text-white font-medium tracking-wide transition-colors hover:bg-[#255490] ${className}`}>
       <span className="relative z-10">{children}</span>
       <div className="absolute inset-0 -z-0 bg-gradient-to-r from-[#2098D0] to-[#95C1D9] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
     </motion.button>;

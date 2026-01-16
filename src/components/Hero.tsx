@@ -64,7 +64,7 @@ export function Hero() {
       </AnimatePresence>
 
       {/* Gradient Overlay for Text Readability */}
-     <div className="absolute inset-0 bg-gradient-to-b from-[#0F2E52]/60 via-[#0F2E52]/40 to-[#0F2E52]/80 z-10" />
+     {/* <div className="absolute inset-0 bg-gradient-to-b from-[#0F2E52]/60 via-[#0F2E52]/40 to-[#0F2E52]/80 z-10" /> */}
 
     </div>
 
@@ -85,11 +85,11 @@ export function Hero() {
         ease: 'easeOut'
       }} className="mb-6">
         <span className="text-[#95C1D9] font-medium tracking-[0.2em] uppercase text-sm md:text-base drop-shadow-lg">
-          Panja Technologies
+          Panja Solutions
         </span>
       </motion.div>
 
-      <h1 className="text-5xl md:text-7xl lg:text-9xl font-bold text-white leading-[0.9] tracking-tight mb-8 drop-shadow-2xl">
+      <h1 className="text-5xl md:text-7xl lg:text-9xl  font-bold text-white  tracking-tight mb-8 drop-shadow-2xl">
         <motion.span className="block" initial={{
           opacity: 0,
           y: 100
@@ -103,7 +103,7 @@ export function Hero() {
         }}>
           Engineering
         </motion.span>
-        <motion.span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-[#95C1D9] to-[#2098D0]" initial={{
+        <motion.span className="block pb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-[#95C1D9] to-[#2098D0]" initial={{
           opacity: 0,
           y: 100
         }} animate={{
