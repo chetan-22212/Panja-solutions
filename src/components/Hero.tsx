@@ -89,7 +89,7 @@ export function Hero() {
         </span>
       </motion.div>
 
-      <h1 className="text-5xl md:text-7xl lg:text-9xl font-bold text-white leading-[0.9] tracking-tight mb-8 drop-shadow-2xl">
+      <h1 className="text-5xl md:text-7xl lg:text-9xl  font-bold text-white  tracking-tight mb-8 drop-shadow-2xl">
         <motion.span className="block" initial={{
           opacity: 0,
           y: 100
@@ -103,7 +103,7 @@ export function Hero() {
         }}>
           Engineering
         </motion.span>
-        <motion.span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-[#95C1D9] to-[#2098D0]" initial={{
+        <motion.span className="block pb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-[#95C1D9] to-[#2098D0]" initial={{
           opacity: 0,
           y: 100
         }} animate={{

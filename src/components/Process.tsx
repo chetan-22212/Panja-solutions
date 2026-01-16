@@ -79,9 +79,9 @@ export default function Process() {
         <div ref={containerRef} className="relative hidden md:block">
           {/* Background Line */}
           <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-[#0F2E52]/10 -translate-x-1/2" />
-          
+
           {/* Animated Progress Line */}
-          <motion.div 
+          <motion.div
             style={{ height: lineHeight }}
             className="absolute left-1/2 top-0 w-[2px] bg-gradient-to-b from-[#0F2E52] to-[#255490] -translate-x-1/2"
           />
@@ -97,28 +97,24 @@ export default function Process() {
                 className="relative"
               >
                 {/* Connecting Line to Center */}
-                <div className={`absolute top-1/2 w-24 h-[2px] bg-[#0F2E52]/10 ${
-                  index % 2 === 0 ? 'left-1/2 ml-5' : 'right-1/2 mr-5'
-                }`} />
+                <div className={`absolute top-1/2 w-24 h-[2px] bg-[#0F2E52]/10 ${index % 2 === 0 ? 'right-1/2 mr-5' : 'left-1/2 ml-5'
+                  }`} />
 
-                <div className={`flex items-center gap-24 ${
-                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
-                }`}>
+                <div className={`flex items-center gap-24 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                  }`}>
                   {/* Content Card */}
                   <div className={`flex-1 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
                     <div className="inline-block">
                       <div className="relative bg-white border-2 border-[#0F2E52]/10 rounded-2xl p-8 hover:border-[#0F2E52]/30 hover:shadow-2xl transition-all duration-300 group overflow-hidden">
                         {/* Gradient Overlay on Hover */}
                         <div className="absolute inset-0 bg-gradient-to-br from-[#0F2E52]/0 via-[#255490]/0 to-[#0F2E52]/0 group-hover:from-[#0F2E52]/5 group-hover:via-[#255490]/5 group-hover:to-[#0F2E52]/5 transition-all duration-500 rounded-2xl" />
-                        
+
                         {/* Corner Accent */}
-                        <div className={`absolute top-0 w-20 h-20 bg-gradient-to-br from-[#0F2E52]/10 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                          index % 2 === 0 ? 'right-0' : 'left-0 rotate-90'
-                        }`} />
-                        
-                        <div className={`relative flex items-center gap-4 mb-4 ${
-                          index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'
-                        }`}>
+                        <div className={`absolute top-0 w-20 h-20 bg-gradient-to-br from-[#0F2E52]/10 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${index % 2 === 0 ? 'right-0' : 'left-0 rotate-90'
+                          }`} />
+
+                        <div className={`relative flex items-center gap-4 mb-4 ${index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'
+                          }`}>
                           <div className="text-5xl font-bold text-[#0F2E52]/20 group-hover:text-[#0F2E52]/30 transition-colors duration-300">
                             {step.number}
                           </div>
@@ -192,10 +188,10 @@ export default function Process() {
                 <div className="flex-1 relative bg-white border-2 border-[#0F2E52]/10 rounded-2xl p-6 hover:border-[#0F2E52]/30 hover:shadow-2xl transition-all duration-300 group overflow-hidden">
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[#0F2E52]/0 to-[#255490]/0 group-hover:from-[#0F2E52]/5 group-hover:to-[#255490]/5 transition-all duration-500" />
-                  
+
                   {/* Decorative Corner */}
                   <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-[#0F2E52]/10 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
+
                   <div className="relative">
                     <h3 className="text-2xl font-bold text-[#0F2E52] mb-2">
                       {step.title}
@@ -206,7 +202,7 @@ export default function Process() {
                     <p className="text-[#255490]/60 text-sm mb-4">
                       {step.details}
                     </p>
-                    
+
                     {/* Arrow Indicator */}
                     <div className="flex items-center gap-2 text-[#0F2E52] text-sm font-semibold group-hover:text-[#255490] transition-colors duration-300">
                       <span>Learn More</span>
