@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, useScroll, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import white_logo from "../assets/colored-logo.png"
-import blue_logo from "../assets/logo_panja.png"
+import blue_logo from "../assets/logo_panja.png";
 const navLinks = [{
   name: 'Home',
   path: '/'
@@ -37,9 +37,9 @@ export function Header() {
     return () => unsubscribe();
   }, [scrollY]);
 
-  const logoSrc = isScrolled ? white_logo : ["/solutions", "/about"].includes(location.pathname)?blue_logo:white_logo;
+  const logoSrc = isScrolled ? blue_logo : ["/solutions", "/about"].includes(location.pathname) ? blue_logo : white_logo;
   return <>
-    <motion.header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[#0F2E52]/80 backdrop-blur-md py-4 shadow-lg' : 'bg-transparent py-6'}`} initial={{
+    <motion.header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500  ${isScrolled ? 'bg-white backdrop-blur-md py-4 shadow-xl' : 'bg-transparent py-3'}`} initial={{
       y: -100
     }} animate={{
       y: 0
@@ -50,14 +50,14 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <Link to="/" className="relative z-50 group">
           <span className={`font-bold text-xl tracking-tight transition-colors duration-300 ${isScrolled || isMobileMenuOpen ? 'text-white' : 'text-[#1296db]'}`}>
-            <img src={logoSrc} className={"h-16 w-24"} />
+            <img src={logoSrc} className={"h-14 w-24"} />
           </span>
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map(link => <Link key={link.path} to={link.path} className="relative group">
-            <span className={`text-sm font-medium tracking-wide transition-colors duration-300 ${isScrolled ? 'text-white/90 hover:text-white' : 'text-[#1296db] hover:text-[#1296db]'}`}>
+            <span className={`text-sm font-medium tracking-wide transition-colors duration-300 ${!isScrolled ? ["/solutions", "/about"].includes(location.pathname) ? 'text-[#1296db] hover:text-[#1296db]': 'text-white/90 hover:text-white' : 'text-[#1296db] hover:text-[#1296db]'}`}>
               {link.name}
             </span>
             {location.pathname === link.path && <motion.div layoutId="activeNav" className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#2098D0]" transition={{
