@@ -79,17 +79,17 @@ export default function Capabilities() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-[2px] w-12 bg-[#2098D0]" />
-              <p className="text-[#2098D0] font-bold tracking-widest uppercase text-xs">
-                Full Spectrum
-              </p>
-            </div>
+            {/* <div className="flex items-center gap-3 mb-4"> */}
+              {/* <div className="h-[2px] w-12 bg-[#2098D0]" /> */}
+              {/* <p className="text-[#2098D0] font-bold tracking-widest uppercase text-xs"> */}
+                {/* Full Spectrum */}
+              {/* </p> */}
+            {/* </div> */}
             <h2 className="text-4xl md:text-6xl font-bold text-[#0F2E52] mb-3 leading-tight">
-              Our TechnicalArsenal
+              Our Technical Arsenal
             </h2>
             <p className="text-[#255490]/60 text-sm">
-              Scroll to explore →
+              {/* Scroll to explore → */}
             </p>
           </motion.div>
         </div>
