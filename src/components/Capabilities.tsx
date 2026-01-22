@@ -105,7 +105,7 @@ export default function Capabilities() {
               initial={{ opacity: 0, y: 100 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative h-[50vh]  w-[65vw] md:w-[25vw] flex-shrink-0"
+              className="group relative h-[50vh]  w-[65vw] lg:h-[28vh] md:w-[25vw] flex-shrink-0"
             >
               {/* Main Card */}
               <div className="relative h-[110%] md:[h-120%]  lg:h-[130%] bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border-2 border-[#0F2E52]/10 hover:border-[#2098D0]/30 transition-all duration-500">
