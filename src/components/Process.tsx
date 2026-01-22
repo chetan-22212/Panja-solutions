@@ -45,7 +45,7 @@ export default function Process() {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
 
   return (
-    <section className="py-20 md:py-32 px-4 bg-gradient-to-b from-[#FEFEFE] to-[#F8FBFD] relative overflow-hidden">
+    <section className="py-10 md:py-15 px-4 bg-gradient-to-b from-[#FEFEFE] to-[#F8FBFD] relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-20 right-0 w-96 h-96 bg-[#2098D0]/5 rounded-full blur-[100px]" />
       <div className="absolute bottom-20 left-0 w-96 h-96 bg-[#95C1D9]/5 rounded-full blur-[100px]" />
