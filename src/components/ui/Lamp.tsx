@@ -32,12 +32,12 @@ export const LampContainer = ({
     return (
         <div
             className={cn(
-               "relative flex h-[55vh] flex-col items-center justify-center overflow-hidden bg-[#0F2E52] w-full rounded-md z-0"
+               "relative flex h-[55vh] flex-col items-center justify-center overflow-hidden bg-[#0F2E52] w-full rounded-3xl z-0"
 ,
                 className
             )}
         >
-            <div className="relative flex w-full items-center justify-center isolate z-0 scale-y-75"
+            <div className="relative flex w-full items-center justify-center isolate z-0 scale-y-125"
 >
                 <motion.div
                     initial={{ opacity: 0.5, width: "15rem" }}

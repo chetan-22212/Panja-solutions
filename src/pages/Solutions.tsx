@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Building2, ShoppingBag, Stethoscope, LineChart, Server } from 'lucide-react';
 const industries = [{

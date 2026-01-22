@@ -18,7 +18,7 @@ const cases = [{
   category: 'Data Visualization'
 }];
 export function CaseStories() {
-  return <section className="py-32 px-4 bg-[#F8FAFC]">
+  return <section className="py-10 px-4 bg-[#F8FAFC]">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-20">
           <h2 className="text-4xl md:text-6xl font-bold text-[#0F2E52]">
