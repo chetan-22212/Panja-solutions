@@ -3,7 +3,10 @@
 import { MagneticButton } from './ui/MagneticButton';
 import { Boxes } from "./ui/background-boxes";
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 export function CTA() {
+
+  const navigate = useNavigate();
   return <section className="h-screen flex flex-col items-center justify-center bg-[#0F2E52] relative overflow-hidden px-4">
     <div className="absolute inset-0 bg-gradient-to-t from-[#0F2E52] to-[#255490] opacity-50" />
 
@@ -28,7 +31,9 @@ export function CTA() {
         Let's engineer your next digital breakthrough together.
       </p>
 
-      <MagneticButton className="text-[#0F2E52] hover:bg-[#95C1D9] px-12 py-6 text-lg">
+      <MagneticButton className="text-[#0F2E52] hover:bg-[#95C1D9] px-12 py-6 text-lg" onClick={() => {
+        navigate('/contact')
+      }}>
         Start the Conversation
       </MagneticButton>
     </motion.div>

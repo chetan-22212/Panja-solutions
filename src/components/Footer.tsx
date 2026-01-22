@@ -1,12 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Linkedin, Twitter, Github, ArrowUpRight } from 'lucide-react';
 import { MagneticButton } from './ui/MagneticButton';
 import white_logo from "../assets/colored-logo.png"
-import { cn } from "../libs/utils"
+// import { cn } from "../libs/utils"
 export function Footer() {
+  const navigate = useNavigate();
   return <footer className="relative bg-[#0F2E52] text-white pt-24 pb-12 overflow-hidden">
     {/* Abstract Background */}
-    
+
 
     <div className="max-w-7xl mx-auto px-6 relative z-10">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
@@ -68,7 +69,9 @@ export function Footer() {
             <li className="text-[#95C1D9]/60">San Francisco, CA</li>
           </ul>
           <Link to="/contact">
-            <MagneticButton className="bg-[#2098D0] text-white px-6 py-3 text-sm">
+            <MagneticButton className="bg-[#2098D0] text-white px-6 py-3 text-sm" onClick={() => {
+              navigate('/contact')
+            }}>
               Start a Project
             </MagneticButton>
           </Link>
