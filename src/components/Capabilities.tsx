@@ -1,4 +1,4 @@
-import  { useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Globe, Smartphone, Cloud, Cpu, Layout, ArrowRight } from 'lucide-react';
 
@@ -55,10 +55,17 @@ export default function Capabilities() {
   const { scrollYProgress } = useScroll({
     target: targetRef
   });
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-75%']);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const endX = isMobile ? '-150%' : '-75%';
+
+  const x = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ['0%', endX]
+  );
 
   return (
-    <section ref={targetRef} className="relative h-[350vh] bg-gradient-to-b from-[#FEFEFE] via-[#F8F9FA] to-[#FEFEFE]">
+    <section ref={targetRef} className="relative h-[220vh] bg-gradient-to-b from-[#FEFEFE] via-[#F8F9FA] to-[#FEFEFE]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-[0.03]">
@@ -73,31 +80,29 @@ export default function Capabilities() {
         <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#95C1D9]/10 rounded-full blur-[120px]" />
 
         {/* Fixed Header */}
-        <div className="absolute top-12 left-8 md:left-16 z-10 max-w-md">
+        <div className="absolute top-20 left-8 md:top-8 md:left-16 z-10 max-w-lg">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
             {/* <div className="flex items-center gap-3 mb-4"> */}
-              {/* <div className="h-[2px] w-12 bg-[#2098D0]" /> */}
-              {/* <p className="text-[#2098D0] font-bold tracking-widest uppercase text-xs"> */}
-                {/* Full Spectrum */}
-              {/* </p> */}
+            {/* <div className="h-[2px] w-12 bg-[#2098D0]" /> */}
+            {/* <p className="text-[#2098D0] font-bold tracking-widest uppercase text-xs"> */}
+            {/* Full Spectrum */}
+            {/* </p> */}
             {/* </div> */}
-            <h2 className="text-4xl md:text-6xl font-bold text-[#0F2E52] mb-3 leading-tight">
-              Our Technical Arsenal
+            <h2 className="text-5xl md:text-5xl top-2 lg:top-0 font-bold text-[#0F2E52] mb-1 leading-tight">
+               Technical Arsenal
             </h2>
-            <p className="text-[#255490]/60 text-sm">
-              {/* Scroll to explore → */}
-            </p>
+
           </motion.div>
         </div>
 
         {/* Scrolling Cards */}
-        <motion.div 
-          style={{ x }} 
-          className="flex gap-5 px-5 md:px-14 pt-40 md:pt-24"
+        <motion.div
+          style={{ x }}
+          className="flex gap-5 px-5 md:px-14 mt-10"
         >
           {services.map((service, index) => (
             <motion.div
@@ -105,19 +110,33 @@ export default function Capabilities() {
               initial={{ opacity: 0, y: 100 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative h-[50vh]  w-[65vw] lg:h-[28vh] md:w-[25vw] flex-shrink-0"
+              className="
+  group relative
+  w-full
+  max-w-[340px]
+  sm:max-w-[380px]
+  md:max-w-[320px]
+  lg:max-w-[360px]
+  xl:max-w-[380px]
+  flex-shrink-0
+"
+
             >
               {/* Main Card */}
-              <div className="relative h-[110%] md:[h-120%]  lg:h-[130%] bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border-2 border-[#0F2E52]/10 hover:border-[#2098D0]/30 transition-all duration-500">
-                
+              <div className="relative h-full bg-white rounded-2xl overflow-hidden shadow-lg
+  hover:shadow-2xl border-2 border-[#0F2E52]/10 hover:border-[#2098D0]/30
+  transition-all duration-500"
+              >
+
+
                 {/* Animated Gradient Border Glow */}
                 <div className="absolute -inset-[2px] bg-gradient-to-br from-[#2098D0] via-[#95C1D9] to-[#255490] rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500 -z-10" />
-                
+
                 {/* Top Section - Number & Icon */}
                 <div className="relative bg-[#0F2E52] p-6 ">
                   {/* Mesh Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[#255490]/50 to-transparent" />
-                  
+
                   <div className="relative flex justify-between items-start mb-3">
                     <span className="text-[#95C1D9]/40 font-bold text-5xl">
                       {service.number}
@@ -139,7 +158,7 @@ export default function Capabilities() {
                 </div>
 
                 {/* Bottom Section - Content */}
-                <div className="relative p-4 flex flex-col justify-between" style={{ height: 'calc(100% - 180px)' }}>
+                <div className="relative p-4 flex flex-col justify-between" >
                   <div>
                     <h3 className="text-xl font-bold text-[#0F2E52] mb-3 leading-tight">
                       {service.title}
@@ -170,7 +189,7 @@ export default function Capabilities() {
                   </button>
                 </div>
 
-                
+
               </div>
 
               {/* Floating Index Number */}
