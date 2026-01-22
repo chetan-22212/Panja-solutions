@@ -2,6 +2,7 @@ import  { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {  Star, ArrowLeft, ArrowRight } from 'lucide-react';
 
+
 const testimonials = [
   {
     quote: "Panja Technologies didn't just build a platform; they engineered a digital legacy for our brand.",
