@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Globe, Smartphone, Cloud, Cpu, Layout, ArrowRight } from 'lucide-react';
+import { Globe, Smartphone, Cloud, Cpu, Layout, ArrowRight, CheckCircle, Megaphone } from 'lucide-react';
 
 const services = [
   {
@@ -47,13 +47,31 @@ const services = [
     tags: ['Figma', 'Design Systems', 'A/B Testing'],
     stat: '85%',
     statLabel: 'User Satisfaction'
+  }, {
+    title: 'Quality Assurance',
+    description: 'Automated and manual testing strategies to ensure reliability and performance.',
+    icon: CheckCircle,
+    number: '06',
+    tags: ['Automation Testing', 'Playwright', 'CI QA'],
+    stat: '99%',
+    statLabel: 'Defect-Free Releases'
+  },
+  {
+    title: 'Digital Marketing',
+    description: 'Data-driven growth strategies focused on acquisition, retention, and ROI.',
+    icon: Megaphone,
+    number: '07',
+    tags: ['SEO', 'Performance Ads', 'Analytics'],
+    stat: '3x',
+    statLabel: 'Conversion Growth'
   }
+
 ];
 
 export default function Capabilities() {
   const targetRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -72,11 +90,11 @@ export default function Capabilities() {
   const x = useTransform(
     scrollYProgress,
     [0, 1],
-    isMobile ? ['10%', '-160%'] : ['5%', '-75%']
+    isMobile ? ['10%', '-170%'] : ['5%', '-110%']
   );
 
   return (
-    <section ref={targetRef} className="relative h-[350vh] md:h-[300vh] bg-gradient-to-b from-[#FEFEFE] via-[#F8F9FA] to-[#FEFEFE]">
+    <section ref={targetRef} className="relative h-[200vh] md:h-[330vh] bg-gradient-to-b from-[#FEFEFE] via-[#F8F9FA] to-[#FEFEFE]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-[0.03]">
@@ -91,7 +109,7 @@ export default function Capabilities() {
         <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#95C1D9]/10 rounded-full blur-[120px]" />
 
         {/* Fixed Header - Slides down from navbar */}
-        <div className="absolute top-[15vh] md:top-[12vh] left-6 md:left-16 z-10 max-w-lg">
+        <div className="absolute top-[12vh] md:top-[12vh] left-6 md:left-16 z-10 max-w-lg">
           <motion.div
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -104,7 +122,7 @@ export default function Capabilities() {
         </div>
 
         {/* Scrolling Cards Container */}
-        <div className="absolute left-0 right-0 flex items-center h-full pl-6 md:pl-16 pt-[2vh] md:pt-[3vh] lg:pt-[22vh]">
+        <div className="absolute left-0 right-0 flex items-center h-full pl-6 md:pl-16  md:pt-[22vh]">
           <motion.div
             style={{ x }}
             className="flex gap-4 md:gap-6 pr-6 md:pr-16"
@@ -119,7 +137,7 @@ export default function Capabilities() {
                 className="group relative w-[300px] md:w-[380px] flex-shrink-0"
               >
                 {/* Main Card */}
-                <div className="relative h-[400px] md:h-[450px]  bg-white rounded-2xl overflow-hidden shadow-lg
+                <div className="relative h-[350px] md:h-[430px] bg-white rounded-2xl overflow-hidden shadow-lg
                   hover:shadow-2xl border-2 border-[#0F2E52]/10 hover:border-[#2098D0]/30
                   transition-all duration-500"
                 >
@@ -127,32 +145,32 @@ export default function Capabilities() {
                   <div className="absolute -inset-[2px] bg-gradient-to-br from-[#2098D0] via-[#95C1D9] to-[#255490] rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500 -z-10" />
 
                   {/* Top Section - Number & Icon */}
-                  <div className="relative bg-[#0F2E52] p-5 md:p-6">
+                  <div className="relative bg-[#0F2E52] p-4 md:p-6">
                     {/* Mesh Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-[#255490]/50 to-transparent" />
 
-                    <div className="relative flex justify-between items-start mb-3">
-                      <span className="text-[#95C1D9]/40 font-bold text-4xl md:text-5xl">
+                    <div className="relative flex justify-between items-start mb-2 md:mb-3">
+                      <span className="text-[#95C1D9]/40 font-bold text-3xl md:text-5xl">
                         {service.number}
                       </span>
-                      <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-[#2098D0] transition-colors duration-300">
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-[#2098D0] transition-colors duration-300">
                         <service.icon className="w-5 h-5 md:w-6 md:h-6 text-white" strokeWidth={2} />
                       </div>
                     </div>
 
                     {/* Stats Badge */}
-                    <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-3 md:p-4 inline-block">
-                      <div className="text-xl md:text-2xl font-bold text-white mb-1">
+                    <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-2.5 md:p-4 inline-block">
+                      <div className="text-lg md:text-2xl font-bold text-white mb-0.5 md:mb-1">
                         {service.stat}
                       </div>
-                      <div className="text-[#95C1D9] text-xs font-medium uppercase tracking-wider">
+                      <div className="text-[#95C1D9] text-[10px] md:text-xs font-medium uppercase tracking-wider">
                         {service.statLabel}
                       </div>
                     </div>
                   </div>
 
                   {/* Bottom Section - Content */}
-                  <div className="relative p-5 md:p-6 flex flex-col justify-between h-[calc(100%-185px)] md:h-[calc(100%-200px)]">
+                  <div className="relative p-4 md:p-6 flex flex-col justify-between h-[calc(100%-155px)] md:h-[calc(100%-200px)]">
                     <div>
                       <h3 className="text-lg md:text-xl font-bold text-[#0F2E52] mb-2 md:mb-3 leading-tight">
                         {service.title}
