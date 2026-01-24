@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Globe, Smartphone, Cloud, Cpu, Layout, ArrowRight, CheckCircle, Megaphone } from 'lucide-react';
+import { Globe, Smartphone, Cloud, Cpu, Layout, ArrowRight, CheckCircle, Megaphone, ShieldCheck, Database, Settings } from 'lucide-react';
 
 const services = [
   {
@@ -47,7 +47,8 @@ const services = [
     tags: ['Figma', 'Design Systems', 'A/B Testing'],
     stat: '85%',
     statLabel: 'User Satisfaction'
-  }, {
+  },
+  {
     title: 'Quality Assurance',
     description: 'Automated and manual testing strategies to ensure reliability and performance.',
     icon: CheckCircle,
@@ -64,9 +65,38 @@ const services = [
     tags: ['SEO', 'Performance Ads', 'Analytics'],
     stat: '3x',
     statLabel: 'Conversion Growth'
-  }
+  },
 
+  // ➕ New Services
+  {
+    title: 'Cybersecurity',
+    description: 'Protecting systems and data with proactive threat detection and compliance.',
+    icon: ShieldCheck,
+    number: '08',
+    tags: ['Pen Testing', 'Zero Trust', 'Compliance'],
+    stat: '0',
+    statLabel: 'Critical Breaches'
+  },
+  {
+    title: 'Data Engineering',
+    description: 'Scalable data pipelines that power analytics and AI-driven decisions.',
+    icon: Database,
+    number: '09',
+    tags: ['ETL', 'BigQuery', 'Data Warehousing'],
+    stat: '10TB+',
+    statLabel: 'Data Processed Daily'
+  },
+  {
+    title: 'DevOps Consulting',
+    description: 'Accelerating delivery with CI/CD pipelines and infrastructure automation.',
+    icon: Settings,
+    number: '10',
+    tags: ['CI/CD', 'GitOps', 'Monitoring'],
+    stat: '5x',
+    statLabel: 'Deployment Speed'
+  }
 ];
+
 
 export default function Capabilities() {
   const targetRef = useRef(null);

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Linkedin, Twitter, Github, ArrowUpRight } from 'lucide-react';
+import { Linkedin, ArrowUpRight } from 'lucide-react';
 import { MagneticButton } from './ui/MagneticButton';
 import white_logo from "../assets/colored-logo.png"
 // import { cn } from "../libs/utils"
@@ -26,10 +26,19 @@ export function Footer() {
             engineering and cinematic design.
           </p>
           <div className="flex gap-4">
-            {[Linkedin, Twitter, Github].map((Icon, i) => <a key={i} href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-[#0F2E52] transition-all duration-300">
-              <Icon size={18} />
-            </a>)}
+            {[Linkedin].map((Icon, i) => (
+              <a
+                key={i}
+                href="https://www.linkedin.com/company/panja-solutions/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-[#0F2E52] transition-all duration-300"
+              >
+                <Icon size={18} />
+              </a>
+            ))}
           </div>
+
         </div>
 
         {/* Navigation Columns */}
@@ -64,9 +73,9 @@ export function Footer() {
             Contact
           </h4>
           <ul className="space-y-4 mb-8">
-            <li className="text-[#95C1D9]/60">hello@panja.tech</li>
-            <li className="text-[#95C1D9]/60">+1 (555) 123-4567</li>
-            <li className="text-[#95C1D9]/60">San Francisco, CA</li>
+            <li className="text-[#95C1D9]/60">panjasolutions@gmail.com</li>
+            <li className="text-[#95C1D9]/60">+91 777 802 4448</li>
+            <li className="text-[#95C1D9]/60">7, Arman Arcade, near Moti Saak market, Samarkha Chokdi. Anand.388001</li>
           </ul>
           <Link to="/contact">
             <MagneticButton className="bg-[#2098D0] text-white px-6 py-3 text-sm" onClick={() => {
@@ -84,12 +93,12 @@ export function Footer() {
           reserved.
         </p>
         <div className="flex gap-8">
-          <a href="#" className="hover:text-white transition-colors">
+          {/* <a href="#" className="hover:text-white transition-colors">
             Privacy Policy
           </a>
           <a href="#" className="hover:text-white transition-colors">
             Terms of Service
-          </a>
+          </a> */}
         </div>
       </div>
     </div>
