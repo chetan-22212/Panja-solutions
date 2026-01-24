@@ -126,7 +126,7 @@ export function About() {
 
           <div className="space-y-6 text-lg text-[#255490]/80 leading-relaxed">
             <p>
-              Founded in 2014, Panja Technologies began with a simple mission:
+              Founded in 2026, Panja Technologies began with a simple mission:
               to bridge the gap between complex engineering and elegant design.
               We saw a digital landscape filled with functional but uninspiring
               tools, and beautiful but shallow experiences.

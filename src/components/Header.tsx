@@ -129,9 +129,9 @@ export function Header() {
                     <span className={`text-sm font-medium tracking-wide transition-colors duration-300 ${
                       !isScrolled ? 
                       ["/solutions", "/about"].includes(location.pathname) ? 
-                      'text-[#1296db] hover:text-[#1296db]' : 
+                      'text-[#0f2e52] hover:text-[#1296db]' : 
                       'text-white/90 hover:text-white' : 
-                      'text-[#1296db] hover:text-[#1296db]'
+                      'text-[#0f2e52] hover:text-[#1296db]'
                     }`}>
                       {link.name}
                     </span>
