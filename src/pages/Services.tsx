@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { motion } from 'framer-motion';
 import { Brain, TrendingUp, Code2, Cloud, Smartphone, Layout, ArrowRight, CheckCircle, Sparkles } from 'lucide-react';
 import { MagneticButton } from '../components/ui/MagneticButton';
