@@ -19,6 +19,7 @@ export function Home() {
     duration: 0.5
   }}>
       <Hero />
+      
       <FeaturedServices />
       <Capabilities />
       <Impact />

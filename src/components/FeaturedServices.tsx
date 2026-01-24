@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, TrendingUp, Code2, ArrowUpRight, Zap } from 'lucide-react';
+import { Brain, Bug, Code2, ArrowUpRight, Zap } from 'lucide-react';
 
 const coreServices = [
   {
@@ -12,11 +12,11 @@ const coreServices = [
     color: '#2098D0'
   },
   {
-    icon: TrendingUp,
+    icon: Bug,
     number: '02',
-    title: 'Digital Marketing',
-    desc: 'Data-driven growth strategies through SEO, performance marketing, and conversion optimization.',
-    features: ['SEO Strategy', 'Performance Ads', 'Analytics & BI', 'Growth Hacking'],
+    title: 'QA Automation',
+    desc: 'Robust automated testing solutions to ensure quality, reliability, and faster releases.',
+    features: ['Selenium & Playwright', 'API Automation', 'CI/CD Integration', 'Performance Testing'],
     color: '#95C1D9'
   },
   {
@@ -28,6 +28,7 @@ const coreServices = [
     color: '#255490'
   }
 ];
+
 
 export default function FeaturedServices() {
   const [activeService, setActiveService] = useState(0);
