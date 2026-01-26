@@ -63,6 +63,7 @@ export function Hero() {
                 src={heroImages[currentSlide].url} 
                 alt={heroImages[currentSlide].alt} 
                 className="w-full h-full object-cover" 
+                loading='lazy'
               />
             </motion.div>
           </motion.div>

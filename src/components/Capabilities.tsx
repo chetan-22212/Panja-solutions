@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { 
   Globe, Smartphone, Cloud, Cpu, Layout, ArrowRight, CheckCircle, 
@@ -170,17 +170,21 @@ export default function Capabilities() {
     offset: ["start start", "end start"]
   });
 
-  const filteredServices = services.filter(service => {
+ const filteredServices = useMemo(() => 
+  services.filter(service => {
     const matchesCategory = activeCategory === 'All' || service.category === activeCategory;
     const matchesSearch = searchTerm === '' || 
       service.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       service.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
       service.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesCategory && matchesSearch;
-  });
+  }),
+  [activeCategory, searchTerm]
+);
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
+ const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+const backgroundY = useTransform(scrollYProgress, [0, 1], isMobile ? ['0%', '0%'] : ['0%', '50%']);
+const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 1]);
 
   // Helper function to get Icon component
   const getServiceIcon = (service: Service) => {
@@ -198,7 +202,7 @@ export default function Capabilities() {
         style={{ y: backgroundY, opacity }}
         className="absolute inset-0"
       >
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#2098D0]/10 to-transparent rounded-full blur-[120px]" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#2098D0]/10 to-transparent rounded-full blur-[60px] md:blur-[120px]" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-[#0F2E52]/10 to-transparent rounded-full blur-[120px]" />
         
         {/* Grid Pattern */}
@@ -360,7 +364,7 @@ export default function Capabilities() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+               transition={{ duration: 0.3, delay: isMobile ? 0 : index * 0.05 }}
                 onClick={() => setSelectedService(service)}
                 className={`group cursor-pointer ${
                   viewMode === 'grid' 
@@ -518,7 +522,7 @@ export default function Capabilities() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedService(null)}
-              className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+              className="fixed inset-0 z-50 bg-black/50 md:backdrop-blur-sm"
             />
             
             <motion.div
