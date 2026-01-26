@@ -10,42 +10,45 @@ const services = [{
   features: ['Neural Networks & Deep Learning', 'Computer Vision & NLP', 'Predictive Analytics', 'Process Automation'],
   color: 'from-[#0F2E52] to-[#2098D0]',
   featured: true
-}, {
-  icon: TrendingUp,
-  title: 'Digital Marketing & Growth',
-  desc: 'Data-driven marketing strategies that accelerate growth through SEO, performance marketing, and conversion optimization.',
-  features: ['SEO & Content Strategy', 'Performance Marketing', 'Analytics & Attribution', 'Growth Engineering'],
-  color: 'from-[#2098D0] to-[#95C1D9]',
-  featured: true
-}, {
+}, 
+ {
   icon: Code2,
   title: 'Custom Software Development',
   desc: 'End-to-end software engineering for web, mobile, and enterprise platforms built with modern architectures.',
   features: ['Full-Stack Development', 'API & Microservices', 'Cloud-Native Apps', 'DevOps & CI/CD'],
   color: 'from-[#255490] to-[#0F2E52]',
   featured: true
-}, {
+},
+{
+  icon: Smartphone,
+  title: 'Mobile Experiences',
+  desc: 'Native and cross-platform solutions that feel fluid and natural.',
+  features: ['React Native / Flutter', 'iOS & Android Native', 'Offline-First Design', 'Biometric Security'],
+  color: 'from-[#255490] to-[#2098D0]',
+  featured: true
+},
+ {
   icon: Cloud,
   title: 'Cloud Infrastructure',
   desc: 'Resilient infrastructure architecture for global availability and scale.',
   features: ['AWS / Azure / GCP', 'Kubernetes & Docker', 'Serverless Architecture', 'Infrastructure as Code'],
   color: 'from-[#2098D0] to-[#95C1D9]',
   featured: false
-}, {
-  icon: Smartphone,
-  title: 'Mobile Experiences',
-  desc: 'Native and cross-platform solutions that feel fluid and natural.',
-  features: ['React Native / Flutter', 'iOS & Android Native', 'Offline-First Design', 'Biometric Security'],
-  color: 'from-[#255490] to-[#2098D0]',
-  featured: false
-}, {
+},  {
   icon: Layout,
   title: 'UX Engineering',
   desc: 'Data-driven design systems that bridge form and function.',
   features: ['Design Systems', 'User Research & Testing', 'Rapid Prototyping', 'Accessibility (WCAG)'],
   color: 'from-[#255490] to-[#95C1D9]',
   featured: false
-}];
+}, {
+  icon: TrendingUp,
+  title: 'Digital Marketing & Growth',
+  desc: 'Data-driven marketing strategies that accelerate growth through SEO, performance marketing, and conversion optimization.',
+  features: ['SEO & Content Strategy', 'Performance Marketing', 'Analytics & Attribution', 'Growth Engineering'],
+  color: 'from-[#2098D0] to-[#95C1D9]',
+  featured: false
+},];
 export function Services() {
   return <motion.div initial={{
     opacity: 0
