@@ -32,43 +32,46 @@ const coreServices = [
 
 export default function FeaturedServices() {
   const [activeService, setActiveService] = useState(0);
-
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   return (
     <section className="relative min-h-screen flex items-center py-20 px-6 bg-[#0F2E52] overflow-hidden">
       {/* Animated Background Grid */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `linear-gradient(#2098D0 1px, transparent 1px), linear-gradient(90deg, #2098D0 1px, transparent 1px)`,
-          backgroundSize: '100px 100px'
+          backgroundSize: isMobile ? '150px 150px' : '100px 100px'
         }} />
       </div>
 
       {/* Floating Orbs */}
-      <motion.div
-        animate={{
-          x: [0, 100, 0],
-          y: [0, -100, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-        className="absolute top-20 right-20 w-96 h-96 bg-[#2098D0]/20 rounded-full blur-[120px]"
-      />
-      <motion.div
-        animate={{
-          x: [0, -100, 0],
-          y: [0, 100, 0],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-        className="absolute bottom-20 left-20 w-96 h-96 bg-[#95C1D9]/20 rounded-full blur-[120px]"
-      />
-
+   {!isMobile && (
+  <>
+    <motion.div
+      animate={{
+        x: [0, 100, 0],
+        y: [0, -100, 0],
+      }}
+      transition={{
+        duration: 20,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      className="absolute top-20 right-20 w-96 h-96 bg-[#2098D0]/20 rounded-full blur-[120px]"
+    />
+    <motion.div
+      animate={{
+        x: [0, -100, 0],
+        y: [0, 100, 0],
+      }}
+      transition={{
+        duration: 25,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      className="absolute bottom-20 left-20 w-96 h-96 bg-[#95C1D9]/20 rounded-full blur-[120px]"
+    />
+  </>
+)}
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Side - Service Navigation */}
@@ -85,11 +88,11 @@ export default function FeaturedServices() {
                   Core Capabilities
                 </p>
               </div>
-              
+
               <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
                 What We<br />Excel At
               </h2>
-              
+
               <p className="text-[#95C1D9] text-xl mb-12 leading-relaxed">
                 Three pillars of innovation, engineered to propel your business forward.
               </p>
@@ -103,46 +106,40 @@ export default function FeaturedServices() {
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ duration: 0.5, delay: isMobile ? 0 : index * 0.1 }}
                   onClick={() => setActiveService(index)}
-                  className={`w-full text-left group relative overflow-hidden transition-all duration-300 ${
-                    activeService === index ? 'scale-105' : ''
-                  }`}
+                  className={`w-full text-left group relative overflow-hidden transition-all duration-300 ${activeService === index ? 'scale-105' : ''
+                    }`}
                 >
                   {/* Active Indicator */}
-                  <div className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#2098D0] to-[#95C1D9] transition-all duration-300 ${
-                    activeService === index ? 'opacity-100' : 'opacity-0'
-                  }`} />
-                  
-                  <div className={`pl-8 pr-6 py-6 border-l-4 transition-all duration-300 ${
-                    activeService === index 
-                      ? 'border-[#2098D0] bg-[#2098D0]/10' 
+                  <div className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#2098D0] to-[#95C1D9] transition-all duration-300 ${activeService === index ? 'opacity-100' : 'opacity-0'
+                    }`} />
+
+                  <div className={`pl-8 pr-6 py-6 border-l-4 transition-all duration-300 ${activeService === index
+                      ? 'border-[#2098D0] bg-[#2098D0]/10'
                       : 'border-white/10 hover:border-white/30'
-                  }`}>
+                    }`}>
                     <div className="flex items-center gap-4">
-                      <span className={`text-6xl font-bold transition-all duration-300 ${
-                        activeService === index 
-                          ? 'text-[#2098D0]' 
+                      <span className={`text-6xl font-bold transition-all duration-300 ${activeService === index
+                          ? 'text-[#2098D0]'
                           : 'text-white/20 group-hover:text-white/40'
-                      }`}>
+                        }`}>
                         {service.number}
                       </span>
-                      
+
                       <div className="flex-1">
-                        <h3 className={`text-2xl font-bold mb-1 transition-colors duration-300 ${
-                          activeService === index 
-                            ? 'text-white' 
+                        <h3 className={`text-2xl font-bold mb-1 transition-colors duration-300 ${activeService === index
+                            ? 'text-white'
                             : 'text-white/60 group-hover:text-white/80'
-                        }`}>
+                          }`}>
                           {service.title}
                         </h3>
                       </div>
 
-                      <ArrowUpRight className={`w-6 h-6 transition-all duration-300 ${
-                        activeService === index 
-                          ? 'text-[#2098D0] rotate-0' 
+                      <ArrowUpRight className={`w-6 h-6 transition-all duration-300 ${activeService === index
+                          ? 'text-[#2098D0] rotate-0'
                           : 'text-white/40 -rotate-45 group-hover:rotate-0'
-                      }`} />
+                        }`} />
                     </div>
                   </div>
                 </motion.button>
@@ -165,16 +162,16 @@ export default function FeaturedServices() {
                 <div className="relative bg-white rounded-3xl p-10 md:p-12 shadow-2xl">
                   {/* Gradient Border Effect */}
                   <div className="absolute -inset-[1px] bg-gradient-to-br from-[#2098D0] via-[#95C1D9] to-[#255490] rounded-3xl -z-10 opacity-50 blur-sm" />
-                  
+
                   {/* Icon with Animated Background */}
                   <div className="relative mb-8">
                     <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                      // animate={{ rotate: 360 }}
+                      // transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                       className="absolute inset-0 bg-gradient-to-br from-[#2098D0]/20 to-[#95C1D9]/20 rounded-2xl blur-xl"
                       style={{ width: '80px', height: '80px' }}
                     />
-                    <div 
+                    <div
                       className="relative w-20 h-20 rounded-2xl flex items-center justify-center"
                       style={{ backgroundColor: coreServices[activeService].color }}
                     >
@@ -202,7 +199,7 @@ export default function FeaturedServices() {
                         transition={{ delay: i * 0.1 }}
                         className="flex items-center gap-2"
                       >
-                        <div 
+                        <div
                           className="w-2 h-2 rounded-full"
                           style={{ backgroundColor: coreServices[activeService].color }}
                         />
@@ -212,7 +209,7 @@ export default function FeaturedServices() {
                   </div>
 
                   {/* CTA */}
-                  <button 
+                  <button
                     className="w-full py-4 rounded-xl font-bold text-white relative overflow-hidden group"
                     style={{ backgroundColor: coreServices[activeService].color }}
                   >
