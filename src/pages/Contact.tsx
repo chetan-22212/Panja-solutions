@@ -2,33 +2,34 @@
 import { motion } from 'framer-motion';
 import { MagneticButton } from '../components/ui/MagneticButton';
 import { Mail, MapPin, Phone } from 'lucide-react';
-// import emailjs from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 import { useRef } from 'react';
 export function Contact() {
 
 
- const formRef = useRef<HTMLFormElement | null>(null);
-  // const handleSubmit = (e : any) => {
-  //   e.preventDefault();
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (!formRef.current) return;
 
-  //   emailjs
-  //     .sendForm(
-  //       process.env.SERVICE_ID,
-  //       process.env.TEMPLATE_ID,
-  //       formRef.current,
-  //      process.env.PUBLIC_KEY
-  //     )
-  //     .then(
-  //       () => {
-  //         alert("Message sent successfully!");
-  //         formRef.current.reset();
-  //       },
-  //       (error) => {
-  //         console.error(error);
-  //         alert("Failed to send message!");
-  //       }
-  //     );
-  // };
+    emailjs
+      .sendForm(
+        'service_d33bkk7',
+        'template_008u5kf',
+        formRef.current,
+        '1Sb4YjW6H47MjJ-kS'
+      )
+      .then(
+        () => {
+          alert("Message sent successfully!");
+          formRef.current?.reset();
+        },
+        (error : any) => {
+          console.error(error);
+          alert("Failed to send message!");
+        }
+      );
+  };
 
   return <motion.div initial={{
     opacity: 0
@@ -87,8 +88,8 @@ export function Contact() {
               </div>
               <div>
                 <h3 className="text-lg font-bold mb-1">Email Us</h3>
-                <p className="text-[#95C1D9]/60">hello@panja.tech</p>
-                <p className="text-[#95C1D9]/60">careers@panja.tech</p>
+                <p className="text-[#95C1D9]/60">info@panjasolutions.com</p>
+                {/* <p className="text-[#95C1D9]/60">careers@panja.tech</p> */}
               </div>
             </div>
 
@@ -98,8 +99,8 @@ export function Contact() {
               </div>
               <div>
                 <h3 className="text-lg font-bold mb-1">Visit Us</h3>
-                <p className="text-[#95C1D9]/60">123 Innovation Drive</p>
-                <p className="text-[#95C1D9]/60">San Francisco, CA 94105</p>
+                <p className="text-[#95C1D9]/60">7, Arman Arcade, near Moti Saak market,</p>
+                <p className="text-[#95C1D9]/60"> Samarkha Chokdi. Anand.388001</p>
               </div>
             </div>
 
@@ -127,19 +128,19 @@ export function Contact() {
           duration: 0.8,
           delay: 0.4
         }} className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl">
-          <form ref={formRef}  className="space-y-6">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#95C1D9]">
                   Name
                 </label>
-                <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#2098D0] transition-colors" placeholder="John Doe" />
+                <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#2098D0] transition-colors"  />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#95C1D9]">
                   Email
                 </label>
-                <input type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#2098D0] transition-colors" placeholder="john@company.com" />
+                <input type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#2098D0] transition-colors"  />
               </div>
             </div>
 
