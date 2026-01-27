@@ -1,7 +1,7 @@
 // import React from 'react';
 import { Hero } from '../components/Hero';
 import  FeaturedServices  from '../components/FeaturedServices';
-import  Capabilities  from '../components/Capabilities';
+import  {Capabilities}  from '../components/Capabilities';
 import { Impact } from '../components/Impact';
 import  Process  from '../components/Process';
 import { CaseStories } from '../components/CaseStories';
