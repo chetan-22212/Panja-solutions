@@ -1,331 +1,194 @@
-import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Home, Briefcase, Code, Layers, Users, Phone } from 'lucide-react';
-import white_logo from "../assets/colored-logo.png"
+import { useEffect,  useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Menu,
+  X,
+  Home,
+  Briefcase,
+  Code,
+  Layers,
+  Users,
+  Phone,
+} from "lucide-react";
+
+import white_logo from "../assets/colored-logo.png";
 import blue_logo from "../assets/logo_panja.png";
 
+/* ---------------- NAV LINKS ---------------- */
+
 const navLinks = [
-  {
-    name: 'Home',
-    path: '/',
-    icon: Home
-  },
-  {
-    name: 'Services',
-    path: '/services',
-    icon: Briefcase
-  },
-  {
-    name: 'Solutions',
-    path: '/solutions',
-    icon: Code
-  },
-  {
-    name: 'Work',
-    path: '/work',
-    icon: Layers
-  },
-  {
-    name: 'About',
-    path: '/about',
-    icon: Users
-  },
-  {
-    name: 'Contact',
-    path: '/contact',
-    icon: Phone
-  }
+  { name: "Home", path: "/", icon: Home },
+  { name: "Services", path: "/services", icon: Briefcase },
+  { name: "Solutions", path: "/solutions", icon: Code },
+  { name: "Work", path: "/work", icon: Layers },
+  { name: "About", path: "/about", icon: Users },
+  { name: "Contact", path: "/contact", icon: Phone },
 ];
+
+/* ---------------- COMPONENT ---------------- */
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  // const [activeDropdown, setActiveDropdown] = useState(null);
-  const { scrollY } = useScroll();
+
   const location = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = scrollY.on('change', latest => {
-      setIsScrolled(latest > 50);
-    });
-    return () => unsubscribe();
-  }, [scrollY]);
+  /* -------- Mobile Detection -------- */
+  // const isMobile = useMemo(() => {
+  //   if (typeof window === "undefined") return false;
+  //   return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  // }, []);
 
-  // Close mobile menu when route changes
+  /* -------- Scroll Listener (lighter than framer useScroll) -------- */
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  /* -------- Close menu on route change -------- */
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    // setActiveDropdown(null);
   }, [location.pathname]);
 
-  const logoSrc = isScrolled ? blue_logo : ["/solutions", "/about"].includes(location.pathname) ? blue_logo : white_logo;
+  /* -------- Logo logic -------- */
+  const logoSrc =
+    isScrolled || ["/solutions", "/about"].includes(location.pathname)
+      ? blue_logo
+      : white_logo;
 
-  const menuVariants = {
-    hidden: {
-      y: "-100%",
-      opacity: 0,
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 25,
-        stiffness: 200,
-        when: "beforeChildren",
-        staggerChildren: 0.1
-      }
-    },
-    exit: {
-      y: "-100%",
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut"
-      }
-    }
-  };
-
-  const linkVariants = {
-    hidden: { y: -20, opacity: 0 },
-    visible: { y: 0, opacity: 1 }
-  };
+  /* ---------------- RENDER ---------------- */
 
   return (
     <>
-      <motion.header 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'bg-white backdrop-blur-md py-4 shadow-xl' : 'bg-transparent py-3'
-        }`}
-        initial={{ y: -100 }}
+      {/* ================= HEADER ================= */}
+
+      <motion.header
+        initial={{ y: -60 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
+        transition={{ duration: 0.4 }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300
+        ${isScrolled ? "bg-white shadow-md" : "bg-transparent"}`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
-          <Link to="/" className="relative z-50 group">
-            <motion.span 
-              whileHover={{ scale: 1.05 }}
-              className="block"
-            >
-              <img src={logoSrc} className="h-14 w-24" alt="Logo" />
-            </motion.span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center py-3">
+
+          {/* Logo */}
+          <Link to="/" className="relative z-50">
+            <img src={logoSrc} className="h-12 w-auto" alt="Panja Solutions" />
           </Link>
 
-          {/* Desktop Nav */}
+          {/* ------------ Desktop Nav ------------ */}
           <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => {
+            {navLinks.map((link) => {
               const Icon = link.icon;
+              const isActive = location.pathname === link.path;
+
               return (
                 <Link key={link.path} to={link.path} className="relative group">
                   <div className="flex items-center gap-2">
-                    <Icon className={`w-4 h-4 transition-colors duration-300 ${
-                      !isScrolled ? 
-                      ["/solutions", "/about"].includes(location.pathname) ? 
-                      'text-[#1296db]' : 
-                      'text-white/90' : 
-                      'text-[#1296db]'
-                    }`} />
-                    <span className={`text-sm font-medium tracking-wide transition-colors duration-300 ${
-                      !isScrolled ? 
-                      ["/solutions", "/about"].includes(location.pathname) ? 
-                      'text-[#0f2e52] hover:text-[#1296db]' : 
-                      'text-white/90 hover:text-white' : 
-                      'text-[#0f2e52] hover:text-[#1296db]'
-                    }`}>
+                    <Icon
+                      className={`w-4 h-4 transition-colors ${
+                        isScrolled || ["/solutions", "/about"].includes(location.pathname)
+                          ? "text-[#0f2e52]"
+                          : "text-white"
+                      }`}
+                    />
+                    <span
+                      className={`text-sm font-medium transition-colors
+                        ${
+                          isScrolled || ["/solutions", "/about"].includes(location.pathname)
+                            ? "text-[#0f2e52] hover:text-[#1296db]"
+                            : "text-white hover:text-white/80"
+                        }`}
+                    >
                       {link.name}
                     </span>
                   </div>
-                  
-                  {location.pathname === link.path && (
-                    <motion.div 
-                      layoutId="activeNav" 
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#2098D0] to-[#95C1D9]" 
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
+
+                  {isActive && (
+                    <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-[#2098D0] to-[#95C1D9]" />
                   )}
-                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#2098D0] to-[#95C1D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                 </Link>
               );
             })}
           </nav>
 
-          {/* Mobile Menu Button */}
-          <motion.button 
-            className="md:hidden relative z-50"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            whileTap={{ scale: 0.95 }}
+          {/* ------------ Mobile Button ------------ */}
+          <button
+            className="md:hidden z-50 p-2 rounded-lg bg-white/10 border border-white/20"
+            onClick={() => setIsMobileMenuOpen((v) => !v)}
           >
-            <div className="p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6 text-[#0F2E52]" />
-              ) : (
-                <Menu className={`w-6 h-6 ${
-                  isScrolled ? 'text-[#0F2E52]' : 
-                  ["/solutions", "/about"].includes(location.pathname) ? 
-                  'text-[#0F2E52]' : 
-                  'text-white'
-                }`} />
-              )}
-            </div>
-          </motion.button>
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6 text-[#0f2e52]" />
+            ) : (
+              <Menu
+                className={`w-6 h-6 ${
+                  isScrolled || ["/solutions", "/about"].includes(location.pathname)
+                    ? "text-[#0f2e52]"
+                    : "text-white"
+                }`}
+              />
+            )}
+          </button>
         </div>
       </motion.header>
 
-      {/* Mobile Menu Overlay - Top Dropdown */}
+      {/* ================= MOBILE MENU ================= */}
+
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
-            variants={menuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="fixed top-0 left-0 right-0 z-40 md:hidden pt-24 pb-8 bg-gradient-to-b from-[#0F2E52] via-[#1A3A63] to-[#0F2E52] shadow-2xl"
-            style={{
-              borderBottom: '3px solid',
-              borderImage: 'linear-gradient(to right, #2098D0, #95C1D9) 1',
-              boxShadow: '0 20px 60px rgba(15, 46, 82, 0.3)'
-            }}
-          >
-            {/* Decorative Elements */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#2098D0] to-transparent" />
-            
-            <div className="max-w-7xl mx-auto px-4 sm:px-6">
-              {/* Current Page Indicator */}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="mb-8 px-4 py-2 bg-white/5 rounded-lg backdrop-blur-sm border border-white/10 inline-block"
-              >
-                <div className="flex items-center gap-2 text-white/80 text-sm">
-                  <div className="w-2 h-2 rounded-full bg-[#2098D0]" />
-                  <span>Currently Viewing:</span>
-                  <span className="text-white font-medium">
-                    {navLinks.find(link => link.path === location.pathname)?.name || 'Home'}
-                  </span>
-                </div>
-              </motion.div>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 z-40 bg-black md:hidden"
+            />
 
-              {/* Navigation Links */}
-              <nav className="grid grid-cols-1 gap-2">
-                {navLinks.map((link, index) => {
+            {/* Menu Panel */}
+            <motion.div
+              initial={{ y: "-100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-100%" }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="fixed top-0 left-0 right-0 z-50 md:hidden bg-[#0F2E52] pt-24 pb-8"
+            >
+              <div className="px-6 space-y-3">
+                {navLinks.map((link) => {
                   const Icon = link.icon;
                   const isActive = location.pathname === link.path;
-                  
+
                   return (
-                    <motion.div
+                    <Link
                       key={link.path}
-                      variants={linkVariants}
-                      custom={index}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <Link 
-                        to={link.path} 
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className={`group flex items-center justify-between p-4 rounded-xl transition-all duration-300 ${
-                          isActive 
-                            ? 'bg-gradient-to-r from-[#2098D0] to-[#95C1D9] text-white shadow-lg' 
-                            : 'bg-white/5 hover:bg-white/10 text-white/90 hover:text-white'
+                      to={link.path}
+                      className={`flex items-center gap-4 px-4 py-4 rounded-xl transition
+                        ${
+                          isActive
+                            ? "bg-gradient-to-r from-[#2098D0] to-[#95C1D9] text-white"
+                            : "bg-white/5 text-white/90"
                         }`}
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className={`p-2 rounded-lg ${
-                            isActive 
-                              ? 'bg-white/20' 
-                              : 'bg-white/10 group-hover:bg-white/20'
-                          } transition-colors duration-300`}>
-                            <Icon className="w-5 h-5" />
-                          </div>
-                          <span className="text-lg font-medium">{link.name}</span>
-                        </div>
-                        
-                        <div className="flex items-center gap-2">
-                          {isActive && (
-                            <motion.div 
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              className="w-2 h-2 rounded-full bg-white"
-                            />
-                          )}
-                          <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${
-                            isActive ? 'rotate-180' : 'group-hover:translate-x-1'
-                          }`} />
-                        </div>
-                      </Link>
-                      
-                      {/* Active Link Indicator */}
-                      {isActive && (
-                        <motion.div 
-                          initial={{ width: 0 }}
-                          animate={{ width: '100%' }}
-                          transition={{ delay: 0.3 }}
-                          className="h-1 bg-gradient-to-r from-transparent via-white to-transparent mt-1"
-                        />
-                      )}
-                    </motion.div>
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span className="text-lg font-medium">{link.name}</span>
+                    </Link>
                   );
                 })}
-              </nav>
 
-              {/* Contact Info Section */}
-              <motion.div 
-                variants={linkVariants}
-                initial="hidden"
-                animate="visible"
-                transition={{ delay: 0.6 }}
-                className="mt-10 px-4 py-6 bg-white/5 rounded-2xl backdrop-blur-sm border border-white/10"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-3 h-3 rounded-full bg-[#2098D0] animate-pulse" />
-                  <span className="text-white font-medium">Get in Touch</span>
-                </div>
-                
-                <div className="space-y-3 text-white/80 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4" />
-                    <span>+1 (555) 123-4567</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Briefcase className="w-4 h-4" />
-                    <span>hello@company.com</span>
-                  </div>
-                </div>
-                
-                <motion.button 
-                  whileTap={{ scale: 0.98 }}
-                  className="mt-6 w-full py-3 bg-gradient-to-r from-[#2098D0] to-[#95C1D9] text-white font-medium rounded-xl hover:shadow-lg transition-all duration-300"
-                  onClick={() => {
-                  navigate('/contact')
-                }}
+                {/* Contact CTA */}
+                <button
+                  onClick={() => navigate("/contact")}
+                  className="w-full mt-6 py-4 rounded-xl bg-gradient-to-r from-[#2098D0] to-[#95C1D9] text-white font-semibold"
                 >
-                  Schedule a Call
-                </motion.button>
-              </motion.div>
-            </div>
-
-            {/* Close Button */}
-            <motion.button
-              onClick={() => setIsMobileMenuOpen(false)}
-              whileTap={{ scale: 0.95 }}
-              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors duration-300"
-            >
-              <X className="w-5 h-5 text-white" />
-            </motion.button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Background Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm md:hidden"
-          />
+                  Contact Us
+                </button>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
