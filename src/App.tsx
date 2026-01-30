@@ -12,6 +12,16 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { WhatsAppFloat } from "./components/WhatsAppFloat";
 
+
+// Add this to your main component to check Safari specifically
+useEffect(() => {
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  if (isSafari) {
+    console.log('Running in Safari - checking performance issues');
+  }
+}, []);
+
+
 function ScrollToTop() {
   const {
     pathname
