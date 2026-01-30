@@ -15,12 +15,12 @@ import { Contact } from './pages/Contact';
 
 
 // Add this to your main component to check Safari specifically
-useEffect(() => {
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  if (isSafari) {
-    console.log('Running in Safari - checking performance issues');
-  }
-}, []);
+// useEffect(() => {
+//   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+//   if (isSafari) {
+//     console.log('Running in Safari - checking performance issues');
+//   }
+// }, []);
 
 
 function ScrollToTop() {

@@ -6,11 +6,11 @@ import Process from '../components/Process';
 import { CaseStories } from '../components/CaseStories';
 import Trust from '../components/Trust';
 import { CTA } from '../components/CTA';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion,  } from 'framer-motion';
 import { useIOSOptimization } from '../utils/useIOSOptimization';
 
 export function Home() {
-  const shouldReduceMotion = useReducedMotion();
+  // const shouldReduceMotion = useReducedMotion();
   const { isIOS, disableJSAnimations } = useIOSOptimization();
   
   // On iOS, use regular div with CSS class instead of motion.div

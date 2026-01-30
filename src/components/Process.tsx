@@ -103,8 +103,7 @@ export default function Process() {
               whileInView={{ opacity: 1 }}
               transition={isIOS ? { duration: 0.1 } : { delay: i * 0.2 }}
               className="absolute left-1/2 w-2 h-2 bg-white border border-[#0F2E52]/30 rounded-full -translate-x-1/2"
-              style={{ top: `${20 + i * 20}%` }}
-            />
+              style={{ top: `${20 + i * 20}%` }} children={undefined}            />
           ))}
 
           <div className="space-y-36">
