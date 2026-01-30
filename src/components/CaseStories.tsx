@@ -2,6 +2,8 @@ import  { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight,  Zap, Users, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useIOSOptimization } from '../utils/useIOSOptimization';
+import { IOSWhileInView } from './IOSMotionWrapper';
 
 const projects = [
   {
@@ -91,6 +93,7 @@ export function CaseStories() {
   const [hoveredProject, setHoveredProject] = useState(null);
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'carousel'
   const navigate = useNavigate();
+  const { isIOS } = useIOSOptimization();
 
   const nextProject = () => {
     setActiveProject((prev) => (prev + 1) % projects.length);
@@ -120,18 +123,17 @@ export function CaseStories() {
         <div className="mb-16 md:mb-24">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
+              <IOSWhileInView
+                initial={isIOS ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                whileInView={isIOS ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                transition={isIOS ? { duration: 0.1 } : { duration: 0.6 }}
                 className="inline-flex items-center gap-3 mb-4"
               >
                 <div className="h-1 w-12 bg-gradient-to-r from-[#0F2E52] to-[#2098D0]" />
                 <span className="text-[#0F2E52] font-bold tracking-widest uppercase text-xs">
                   Portfolio Spotlight
                 </span>
-              </motion.div>
+              </IOSWhileInView>
               <h2 className="text-4xl md:text-6xl font-bold text-[#0F2E52] mb-4">
                 Innovation <span className="text-[#2098D0]">Showcase</span>
               </h2>
@@ -173,11 +175,10 @@ export function CaseStories() {
           </div>
 
           {/* Stats Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <IOSWhileInView
+            initial={isIOS ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isIOS ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={isIOS ? { duration: 0.1 } : { duration: 0.6, delay: 0.2 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
           >
             {[
@@ -191,7 +192,7 @@ export function CaseStories() {
                 <div className="text-[#255490]/70 text-sm">{stat.label}</div>
               </div>
             ))}
-          </motion.div>
+          </IOSWhileInView>
         </div>
 
         {/* Desktop: Interactive Grid View */}
@@ -218,6 +219,8 @@ export function CaseStories() {
                         src={project.image}
                         alt={project.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
+                        decoding="async"
                       />
                       
                       {/* Category Badge */}
@@ -371,6 +374,8 @@ export function CaseStories() {
                               src={project.preview || project.image}
                               alt={project.title}
                               className="w-full h-full object-cover"
+                              loading="lazy"
+                              decoding="async"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0F2E52]/30 to-transparent" />
                           </div>
@@ -457,6 +462,8 @@ export function CaseStories() {
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0F2E52]/40 to-transparent" />
                 

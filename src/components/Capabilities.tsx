@@ -1,7 +1,10 @@
 
 
-import { useMemo, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useMemo, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useIOSOptimization } from '../utils/useIOSOptimization';
+import { useIOSScroll, useIOSTransform } from '../hooks/useIOSScroll';
+import { IOSWhileInView } from './IOSMotionWrapper';
 import { 
   Globe, Smartphone, Cloud, Cpu, Layout, ArrowRight, CheckCircle, 
   Megaphone, ShieldCheck, Database, Settings,Search,Grid, List,
@@ -165,12 +168,11 @@ export default function Capabilities() {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [searchTerm, setSearchTerm] = useState('');
+  const { isIOS, disableJSAnimations } = useIOSOptimization();
   
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
+  const { ref: containerRef, scrollYProgress } = useIOSScroll({
     offset: ["start start", "end start"]
-  });
+  }, isIOS, disableJSAnimations);
 
  const filteredServices = useMemo(() => 
   services.filter(service => {
@@ -185,8 +187,8 @@ export default function Capabilities() {
 );
 
  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-const backgroundY = useTransform(scrollYProgress, [0, 1], isMobile ? ['0%', '0%'] : ['0%', '50%']);
-const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 1]);
+const backgroundY = useIOSTransform(scrollYProgress, [0, 1], isMobile ? ['0%', '0%'] : ['0%', '50%'], isIOS, disableJSAnimations);
+const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disableJSAnimations);
 
   // Helper function to get Icon component
   const getServiceIcon = (service: Service) => {
@@ -200,52 +202,43 @@ const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 1]);
   return (
     <section ref={containerRef} className="relative min-h-screen py-20 md:py-32 bg-gradient-to-b from-[#FEFEFE] via-[#F8FBFD] to-[#FEFEFE] overflow-hidden">
       {/* Animated Background Elements */}
-      <motion.div 
-        style={{ y: backgroundY, opacity }}
-        className="absolute inset-0"
-      >
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#2098D0]/10 to-transparent rounded-full blur-[60px] md:blur-[120px]" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-[#0F2E52]/10 to-transparent rounded-full blur-[120px]" />
-        
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, #0F2E52 1.5px, transparent 0)`,
-            backgroundSize: '60px 60px'
-          }} />
+      {isIOS ? (
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#2098D0]/10 to-transparent rounded-full blur-[60px] md:blur-[120px]" />
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-[#0F2E52]/10 to-transparent rounded-full blur-[120px]" />
+          
+          {/* Grid Pattern */}
+          <div className="absolute inset-0 opacity-[0.02]">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, #0F2E52 1.5px, transparent 0)`,
+              backgroundSize: '60px 60px'
+            }} />
+          </div>
         </div>
-
-        {/* Floating Orbs */}
-        {/* {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            animate={{
-              y: [0, -20, 0],
-              x: [0, i % 2 === 0 ? 10 : -10, 0]
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.5
-            }}
-            className={`absolute w-4 h-4 rounded-full bg-gradient-to-r ${i % 2 === 0 ? 'from-[#2098D0] to-[#95C1D9]' : 'from-[#0F2E52] to-[#255490]'}`}
-            style={{
-              left: `${20 + i * 15}%`,
-              top: `${30 + i * 10}%`,
-              filter: 'blur(2px)'
-            }}
-          />
-        ))} */}
-      </motion.div>
+      ) : (
+        <motion.div 
+          style={{ y: backgroundY, opacity }}
+          className="absolute inset-0"
+        >
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#2098D0]/10 to-transparent rounded-full blur-[60px] md:blur-[120px]" />
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-[#0F2E52]/10 to-transparent rounded-full blur-[120px]" />
+          
+          {/* Grid Pattern */}
+          <div className="absolute inset-0 opacity-[0.02]">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, #0F2E52 1.5px, transparent 0)`,
+              backgroundSize: '60px 60px'
+            }} />
+          </div>
+        </motion.div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header Section */}
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+        <IOSWhileInView
+          initial={isIOS ? { opacity: 0 } : { opacity: 0, y: -30 }}
+          whileInView={isIOS ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          transition={isIOS ? { duration: 0.1 } : { duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16 md:mb-24"
         >
           <div className="inline-flex items-center gap-3 mb-6">
@@ -272,28 +265,25 @@ const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 1]);
               { value: '50M+', label: 'Users Impacted' },
               { value: '99.9%', label: 'Client Satisfaction' }
             ].map((stat, index) => (
-              <motion.div
+              <IOSWhileInView
                 key={index}
-                initial={{ scale: 0.8, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
+                initial={isIOS ? { opacity: 0 } : { scale: 0.8, opacity: 0 }}
+                whileInView={isIOS ? { opacity: 1 } : { scale: 1, opacity: 1 }}
+                transition={isIOS ? { duration: 0.1 } : { delay: index * 0.1 }}
                 className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-[#0F2E52]/10 hover:border-[#2098D0]/30 hover:shadow-lg transition-all duration-300"
               >
                 <div className="text-3xl font-bold text-[#0F2E52] mb-2">{stat.value}</div>
                 <div className="text-[#255490]/70 text-sm">{stat.label}</div>
-              </motion.div>
+              </IOSWhileInView>
             ))}
           </div>
-        </motion.div>
+        </IOSWhileInView>
 
         {/* Controls Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        <IOSWhileInView
+          initial={isIOS ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          whileInView={isIOS ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          transition={isIOS ? { duration: 0.1 } : { duration: 0.6 }}
           className="mb-12"
         >
           <div className="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-8">
@@ -339,10 +329,8 @@ const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 1]);
           {/* Category Filter */}
           <div className="flex flex-wrap gap-2 justify-center">
             {categories.map((category) => (
-              <motion.button
+              <button
                 key={category}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveCategory(category)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                   activeCategory === category
@@ -351,10 +339,10 @@ const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 1]);
                 }`}
               >
                 {category}
-              </motion.button>
+              </button>
             ))}
           </div>
-        </motion.div>
+        </IOSWhileInView>
 
         {/* Services Grid */}
         <div className={`${viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : 'space-y-4'} gap-6 mb-16`}>
@@ -362,11 +350,11 @@ const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 1]);
             {filteredServices.map((service, index) => (
               <motion.div
                 key={service.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-               transition={{ duration: 0.3, delay: isMobile ? 0 : index * 0.05 }}
+                layout={!isIOS}
+                initial={isIOS ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
+                animate={isIOS ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+                exit={isIOS ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
+               transition={isIOS ? { duration: 0.1 } : { duration: 0.3, delay: isMobile ? 0 : index * 0.05 }}
                 onClick={() => setSelectedService(service)}
                 className={`group cursor-pointer ${
                   viewMode === 'grid' 
@@ -489,11 +477,10 @@ const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 1]);
         </div>
 
         {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        <IOSWhileInView
+          initial={isIOS ? { opacity: 0 } : { opacity: 0, y: 30 }}
+          whileInView={isIOS ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          transition={isIOS ? { duration: 0.1 } : { duration: 0.6 }}
           className="text-center"
         >
           <div className="inline-flex flex-col md:flex-row items-center gap-8 bg-gradient-to-r from-[#0F2E52]/5 to-[#2098D0]/5 rounded-3xl p-8 md:p-12 border-2 border-[#0F2E52]/10">
@@ -512,7 +499,7 @@ const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 1]);
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
-        </motion.div>
+        </IOSWhileInView>
       </div>
 
       {/* Service Detail Modal */}

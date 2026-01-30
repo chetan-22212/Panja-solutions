@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { cn } from "../../libs/utils";
 
 export const BoxesCore = ({ className, ...rest }: { className?: string }) => {

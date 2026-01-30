@@ -1,5 +1,7 @@
 import  { useEffect, useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useInView } from 'framer-motion';
+import { useIOSOptimization } from '../utils/useIOSOptimization';
+import { IOSWhileInView } from './IOSMotionWrapper';
 const metrics = [{
   label: 'Global Projects',
   value: 150,
@@ -20,16 +22,30 @@ function Counter({
   value: number;
   suffix: string;
 }) {
+  const { isIOS, disableJSAnimations } = useIOSOptimization();
   const [count, setCount] = useState(0);
   const ref = useRef(null);
+  
+  // On iOS, show numbers instantly - no animation
+  useEffect(() => {
+    if (isIOS || disableJSAnimations) {
+      setCount(value);
+      return;
+    }
+  }, [isIOS, disableJSAnimations, value]);
+  
   const isInView = useInView(ref, {
     once: true,
     margin: '-100px'
   });
+  
   useEffect(() => {
+    // Skip animation on iOS
+    if (isIOS || disableJSAnimations) return;
+    
     if (isInView) {
-      const duration = 2000; // 2 seconds
-      const steps = 60;
+      const duration = 1500; // Reduced from 2000ms for faster animation
+      const steps = 30; // Reduced steps for smoother, faster animation
       const stepTime = duration / steps;
       const increment = value / steps;
       let current = 0;
@@ -44,25 +60,28 @@ function Counter({
       }, stepTime);
       return () => clearInterval(timer);
     }
-  }, [isInView, value]);
+  }, [isInView, value, isIOS, disableJSAnimations]);
+  
   return <span ref={ref} className="tabular-nums">
       {count}
       {suffix}
     </span>;
 }
 export function Impact() {
+  const { isIOS } = useIOSOptimization();
+  
   return <section className="relative py-32 px-4 bg-[#0F2E52] text-white overflow-hidden">
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 text-center">
-          {metrics.map((metric, index) => <motion.div key={index} initial={{
+          {metrics.map((metric, index) => <IOSWhileInView key={index} initial={isIOS ? { opacity: 0 } : {
           opacity: 0,
           y: 40
-        }} whileInView={{
+        }} whileInView={isIOS ? { opacity: 1 } : {
           opacity: 1,
           y: 0
-        }} transition={{
+        }} transition={isIOS ? { duration: 0.1 } : {
           duration: 0.8,
           delay: index * 0.2
         }} viewport={{
@@ -74,7 +93,7 @@ export function Impact() {
               <div className="text-lg md:text-xl text-[#95C1D9] font-medium tracking-wide uppercase">
                 {metric.label}
               </div>
-            </motion.div>)}
+            </IOSWhileInView>)}
         </div>
       </div>
     </section>;

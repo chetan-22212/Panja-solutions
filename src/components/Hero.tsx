@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useIOSOptimization } from '../utils/useIOSOptimization';
+import { useIOSScroll, useIOSTransform } from '../hooks/useIOSScroll';
 import imagejj from "../assets/imagejj.webp";
 import imageii from "../assets/imageii.webp";
 
@@ -8,33 +10,21 @@ const heroImages = [
   { url: imageii, alt: "Digital Transformation" },
 ];
 
-
-const isIOS =
-  typeof window !== "undefined" &&
-  /iPad|iPhone|iPod/.test(navigator.userAgent);
-
 export function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { isIOS, disableJSAnimations } = useIOSOptimization();
   const ref = useRef<HTMLDivElement>(null);
 
-  // ✅ Only enable scroll animations on non-iOS
-  const { scrollYProgress } = useScroll(
-    !isIOS
-      ? { target: ref, offset: ["start start", "end start"] }
-      : undefined
+  // Always call hooks unconditionally
+  const { scrollYProgress } = useIOSScroll(
+    { target: ref, offset: ["start start", "end start"] },
+    isIOS,
+    disableJSAnimations
   );
 
-  const yText = !isIOS
-    ? useTransform(scrollYProgress!, [0, 1], ["0%", "40%"])
-    : undefined;
-
-  const opacityText = !isIOS
-    ? useTransform(scrollYProgress!, [0, 0.5], [1, 0])
-    : undefined;
-
-  const scaleText = !isIOS
-    ? useTransform(scrollYProgress!, [0, 1], [1, 0.95])
-    : undefined;
+  const yText = useIOSTransform(scrollYProgress, [0, 1], ["0%", "40%"], isIOS, disableJSAnimations);
+  const opacityText = useIOSTransform(scrollYProgress, [0, 0.5], [1, 0], isIOS, disableJSAnimations);
+  const scaleText = useIOSTransform(scrollYProgress, [0, 1], [1, 0.95], isIOS, disableJSAnimations);
 
   // Auto slideshow
   useEffect(() => {
@@ -51,7 +41,7 @@ export function Hero() {
     >
       {/* ===== BACKGROUND ===== */}
       <div className="absolute inset-0 z-0">
-        {isIOS ? (
+        {isIOS || disableJSAnimations ? (
           // ✅ iOS: static fade only
           <img
             src={heroImages[currentSlide].url}
@@ -91,9 +81,9 @@ export function Hero() {
       </div>
 
       {/* ===== TEXT ===== */}
-      {isIOS ? (
+      {isIOS || disableJSAnimations ? (
         // ✅ iOS: simple content, no motion
-        <div className="relative z-20 text-center px-4 max-w-7xl mx-auto">
+        <div className="relative z-20 text-center px-4 max-w-7xl mx-auto ios-fade-in">
           <span className="text-[#95C1D9] font-medium tracking-[0.2em] uppercase text-3xl md:text-4xl">
             Panja Solutions
           </span>

@@ -123,7 +123,7 @@ export function Work() {
           }} className="group cursor-pointer">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-6 shadow-lg">
                   <div className="absolute inset-0 bg-[#0F2E52]/20 z-10 group-hover:bg-[#0F2E52]/0 transition-colors duration-500" />
-                  <motion.img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <motion.img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
                   <div className="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <ArrowUpRight className="w-5 h-5 text-[#0F2E52]" />
                   </div>
