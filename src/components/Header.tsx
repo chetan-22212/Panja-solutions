@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Home, Briefcase, Code, Layers, Users, Phone } from 'lucide-react';
+import { useIOSOptimization } from '../utils/useIOSOptimization';
+import { IOSMotionWrapper } from './IOSMotionWrapper';
 import white_logo from "../assets/colored-logo.png"
 import blue_logo from "../assets/logo_panja.png";
 
@@ -42,16 +44,18 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   // const [activeDropdown, setActiveDropdown] = useState(null);
-  const { scrollY } = useScroll();
   const location = useLocation();
   const navigate = useNavigate();
+  const { isIOS } = useIOSOptimization();
 
   useEffect(() => {
-    const unsubscribe = scrollY.on('change', latest => {
-      setIsScrolled(latest > 50);
-    });
-    return () => unsubscribe();
-  }, [scrollY]);
+    // Use simple scroll listener for all platforms (more reliable)
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -94,13 +98,14 @@ export function Header() {
 
   return (
     <>
-      <motion.header 
+      <IOSMotionWrapper
+        as="header"
+        initial={isIOS ? {} : { y: -100 }}
+        animate={isIOS ? {} : { y: 0 }}
+        transition={isIOS ? {} : { duration: 0.8, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled ? 'bg-white backdrop-blur-md py-4 shadow-xl' : 'bg-transparent py-3'
         }`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
           <Link to="/" className="relative z-50 group">
@@ -151,10 +156,9 @@ export function Header() {
           </nav>
 
           {/* Mobile Menu Button */}
-          <motion.button 
-            className="md:hidden relative z-50"
+          <button 
+            className="md:hidden relative z-50 active:scale-95 transition-transform"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            whileTap={{ scale: 0.95 }}
           >
             <div className="p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
               {isMobileMenuOpen ? (
@@ -168,9 +172,9 @@ export function Header() {
                 }`} />
               )}
             </div>
-          </motion.button>
+          </button>
         </div>
-      </motion.header>
+      </IOSMotionWrapper>
 
       {/* Mobile Menu Overlay - Top Dropdown */}
       <AnimatePresence>
@@ -257,10 +261,10 @@ export function Header() {
                       {/* Active Link Indicator */}
                       {isActive && (
                         <motion.div 
-                          initial={{ width: 0 }}
-                          animate={{ width: '100%' }}
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 1 }}
                           transition={{ delay: 0.3 }}
-                          className="h-1 bg-gradient-to-r from-transparent via-white to-transparent mt-1"
+                          className="h-1 bg-gradient-to-r from-transparent via-white to-transparent mt-1 origin-left"
                         />
                       )}
                     </motion.div>

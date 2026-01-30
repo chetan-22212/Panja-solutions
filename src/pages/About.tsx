@@ -1,6 +1,9 @@
 import  { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Users, Target, Zap, Award } from 'lucide-react';
+import { useIOSOptimization } from '../utils/useIOSOptimization';
+import { useIOSScroll, useIOSTransform } from '../hooks/useIOSScroll';
+import { IOSMotionWrapper, IOSWhileInView } from '../components/IOSMotionWrapper';
 const stats = [{
   label: 'Years of Excellence',
   value: '10+'
@@ -32,59 +35,42 @@ const values = [{
   desc: 'Never compromising on performance, security, or user experience.'
 }];
 export function About() {
+  const { isIOS, disableJSAnimations } = useIOSOptimization();
   const imageRef = useRef<HTMLDivElement>(null);
-  const {
-    scrollYProgress
-  } = useScroll({
-    target: imageRef,
-    offset: ['start end', 'end start']
-  });
-  const yImage = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-  return <motion.div initial={{
-    opacity: 0
-  }} animate={{
-    opacity: 1
-  }} exit={{
-    opacity: 0
-  }} transition={{
-    duration: 0.5
-  }} className="pt-32 pb-20 min-h-screen bg-[#FEFEFE]">
+  
+  const { scrollYProgress } = useIOSScroll(
+    { target: imageRef, offset: ['start end', 'end start'] },
+    isIOS,
+    disableJSAnimations
+  );
+  
+  const yImage = useIOSTransform(scrollYProgress, [0, 1], ['0%', '20%'], isIOS, disableJSAnimations);
+  
+  return <IOSMotionWrapper initial={isIOS ? {} : { opacity: 0 }} animate={isIOS ? {} : { opacity: 1 }} exit={isIOS ? {} : { opacity: 0 }} transition={isIOS ? {} : { duration: 0.5 }} className="pt-32 pb-20 min-h-screen bg-[#FEFEFE]">
       {/* Hero */}
       <div className="max-w-7xl mx-auto px-6 mb-32">
-        <motion.h1 initial={{
-        y: 20,
-        opacity: 0
-      }} animate={{
-        y: 0,
-        opacity: 1
-      }} transition={{
-        duration: 0.8
-      }} className="text-5xl md:text-8xl font-bold text-[#0F2E52] mb-8 tracking-tight">
+        <IOSWhileInView initial={isIOS ? { opacity: 0 } : { y: 20, opacity: 0 }} whileInView={isIOS ? { opacity: 1 } : { y: 0, opacity: 1 }} transition={isIOS ? { duration: 0.1 } : { duration: 0.8 }} className="text-5xl md:text-8xl font-bold text-[#0F2E52] mb-8 tracking-tight">
           We are Panja.
-        </motion.h1>
-        <motion.p initial={{
-        y: 20,
-        opacity: 0
-      }} animate={{
-        y: 0,
-        opacity: 1
-      }} transition={{
-        duration: 0.8,
-        delay: 0.2
-      }} className="text-2xl md:text-3xl text-[#255490]/80 max-w-4xl leading-relaxed">
+        </IOSWhileInView>
+        <IOSWhileInView initial={isIOS ? { opacity: 0 } : { y: 20, opacity: 0 }} whileInView={isIOS ? { opacity: 1 } : { y: 0, opacity: 1 }} transition={isIOS ? { duration: 0.1 } : { duration: 0.8, delay: 0.2 }} className="text-2xl md:text-3xl text-[#255490]/80 max-w-4xl leading-relaxed">
           A collective of engineers, designers, and strategists dedicated to
           building the digital future.
-        </motion.p>
+        </IOSWhileInView>
       </div>
 
       {/* Image Banner with Parallax */}
       <div ref={imageRef} className="w-full h-[60vh] relative overflow-hidden mb-32">
-        <motion.div style={{
-        y: yImage
-      }} className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F2E52]/60 to-transparent z-10" />
-          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" alt="Team collaboration" className="w-full h-[120%] object-cover" />
-        </motion.div>
+        {isIOS || disableJSAnimations ? (
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F2E52]/60 to-transparent z-10" />
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" alt="Team collaboration" className="w-full h-[120%] object-cover" loading="eager" decoding="async" />
+          </div>
+        ) : (
+          <motion.div style={{ y: yImage }} className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F2E52]/60 to-transparent z-10" />
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" alt="Team collaboration" className="w-full h-[120%] object-cover" loading="eager" decoding="async" />
+          </motion.div>
+        )}
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -109,19 +95,9 @@ export function About() {
             <div className="w-20 h-1 bg-[#2098D0] mb-8" />
 
             {/* Story Image */}
-            <motion.div initial={{
-            opacity: 0,
-            scale: 0.95
-          }} whileInView={{
-            opacity: 1,
-            scale: 1
-          }} viewport={{
-            once: true
-          }} transition={{
-            duration: 0.8
-          }} className="rounded-2xl overflow-hidden shadow-2xl mb-8">
-              <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=2070&auto=format&fit=crop" alt="Innovation workspace" className="w-full h-64 object-cover" />
-            </motion.div>
+            <IOSWhileInView initial={isIOS ? { opacity: 0 } : { opacity: 0, scale: 0.95 }} whileInView={isIOS ? { opacity: 1 } : { opacity: 1, scale: 1 }} viewport={{ once: true }} transition={isIOS ? { duration: 0.1 } : { duration: 0.8 }} className="rounded-2xl overflow-hidden shadow-2xl mb-8">
+              <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=2070&auto=format&fit=crop" alt="Innovation workspace" className="w-full h-64 object-cover" loading="eager" decoding="async" />
+            </IOSWhileInView>
           </div>
 
           <div className="space-y-6 text-lg text-[#255490]/80 leading-relaxed">
@@ -164,5 +140,5 @@ export function About() {
           </div>
         </div>
       </div>
-    </motion.div>;
+    </IOSMotionWrapper>;
 }
