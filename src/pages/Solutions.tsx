@@ -114,7 +114,7 @@ export function Solutions() {
             {/* Image */}
             <div className="order-1 lg:order-2 relative h-[400px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl">
               <div className="absolute inset-0 bg-[#0F2E52]/20 mix-blend-multiply z-10" />
-              <img src={activeTab.image} alt={activeTab.title} className="w-full h-full object-cover" />
+              <img src={activeTab.image} alt={activeTab.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
 
               {/* Floating Card */}
               <motion.div initial={{

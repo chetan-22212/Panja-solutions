@@ -5,3 +5,269 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 /* DO NOT DELETE THESE TAILWIND IMPORTS, OTHERWISE THE STYLING WILL NOT RENDER AT ALL - DO NOT DELETE THIS COMMENT */
+
+/* Safari Performance Optimizations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hardware acceleration for animated elements - iOS optimized */
+[class*="motion-"],
+[class*="animate-"],
+.transition-all,
+.transition-transform,
+.motion-div {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  /* Force GPU acceleration on iOS */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+/* iOS fade-in animation - pure CSS, no JS */
+@keyframes iosFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* iOS Safari specific optimizations - AGGRESSIVE */
+/* Target via class added by pre-load script */
+.ios-device [class*="motion-"],
+.ios-device .motion-div {
+  /* Force instant render - no JS animation delays */
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  will-change: auto !important;
+}
+
+.ios-device .ios-page-fade {
+  opacity: 0;
+  animation: iosFadeIn 0.2s ease-out forwards !important;
+}
+
+.ios-device .ios-fade-in {
+  opacity: 0;
+  animation: iosFadeIn 0.15s ease-out forwards !important;
+}
+
+.ios-device .transition-all,
+.ios-device .transition-transform {
+  transition: none !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+}
+
+.ios-device [class*="backdrop-blur"],
+.ios-device .backdrop-blur-sm,
+.ios-device .backdrop-blur,
+.ios-device .backdrop-blur-md,
+.ios-device .backdrop-blur-lg,
+.ios-device .backdrop-blur-xl {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.ios-device [class*="blur-"]:not(.blur-none) {
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+.ios-device * {
+  -webkit-overflow-scrolling: touch;
+  will-change: auto !important;
+}
+
+.ios-device *:hover {
+  transform: none !important;
+  -webkit-transform: none !important;
+}
+
+.ios-device body {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Also target via Safari detection */
+@supports (-webkit-touch-callout: none) {
+  /* Target iOS Safari specifically */
+  
+  /* DISABLE ALL JS ANIMATIONS - Use CSS only */
+  [class*="motion-"],
+  .motion-div {
+    /* Force instant render - no JS animation delays */
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    will-change: auto !important;
+  }
+  
+  /* Simple CSS fade-in for iOS - ONE animation only */
+  @keyframes iosFadeIn {
+    from { 
+      opacity: 0; 
+    }
+    to { 
+      opacity: 1; 
+    }
+  }
+  
+  /* Apply CSS-only fade to motion elements */
+  .ios-page-fade {
+    opacity: 0;
+    animation: iosFadeIn 0.2s ease-out forwards !important;
+  }
+  
+  .ios-fade-in {
+    opacity: 0;
+    animation: iosFadeIn 0.15s ease-out forwards !important;
+  }
+  
+  /* Delay for staggered animations on iOS */
+  .ios-fade-in-delay-1 {
+    animation-delay: 0.05s;
+  }
+
+  .ios-fade-in-delay-2 {
+    animation-delay: 0.1s;
+  }
+
+  .ios-fade-in-delay-3 {
+    animation-delay: 0.15s;
+  }
+  
+  /* Disable all transforms on iOS */
+  .transition-all,
+  .transition-transform {
+    transition: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+  
+  /* Disable ALL backdrop filters on iOS - they're extremely expensive */
+  [class*="backdrop-blur"],
+  .backdrop-blur-sm,
+  .backdrop-blur,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(255, 255, 255, 0.95) !important;
+  }
+  
+  /* Disable blur filters that cause performance issues */
+  [class*="blur-"]:not(.blur-none) {
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+  
+  /* Optimize scrolling on iOS */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Disable will-change to prevent memory issues */
+  * {
+    will-change: auto !important;
+  }
+  
+  /* Disable hover effects that cause repaints */
+  *:hover {
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+  
+  /* Force hardware acceleration only for opacity */
+  body {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+/* Disable backdrop blur on Safari for better performance */
+@supports (-webkit-appearance: none) {
+  [class*="backdrop-blur"],
+  .backdrop-blur-sm,
+  .backdrop-blur,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(255, 255, 255, 0.95) !important;
+  }
+}
+
+/* Smooth scrolling with hardware acceleration */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Loading skeleton styles */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Delay for staggered animations on iOS */
+.ios-fade-in-delay-1 {
+  animation-delay: 0.05s;
+}
+
+.ios-fade-in-delay-2 {
+  animation-delay: 0.1s;
+}
+
+.ios-fade-in-delay-3 {
+  animation-delay: 0.15s;
+}
+
+.ios-fade-in-delay-4 {
+  animation-delay: 0.2s;
+}
+
+.ios-fade-in-delay-5 {
+  animation-delay: 0.25s;
+}

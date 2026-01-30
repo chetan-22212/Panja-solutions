@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Brain, Bug, Code2, ArrowUpRight, Zap } from 'lucide-react';
+import { useIOSOptimization } from '../utils/useIOSOptimization';
 
 const coreServices = [
   {
@@ -31,6 +32,8 @@ const coreServices = [
 
 export default function FeaturedServices() {
   const [activeService, setActiveService] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
+  const { isIOS } = useIOSOptimization();
 
   const isMobile = useMemo(() => {
     if (typeof window === 'undefined') return false;
@@ -38,6 +41,21 @@ export default function FeaturedServices() {
   }, []);
 
   const service = coreServices[activeService];
+  
+  // Simplified animation config for iOS
+  const motionProps = isIOS || shouldReduceMotion
+    ? {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        viewport: { once: true },
+        transition: { duration: 0.2, ease: 'easeOut' },
+      }
+    : {
+        initial: { opacity: 0, y: 30 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true },
+        transition: { duration: 0.5 },
+      };
 
   return (
     <section className="relative min-h-screen flex items-center py-20 px-6 bg-[#0F2E52] overflow-hidden">
@@ -59,27 +77,41 @@ export default function FeaturedServices() {
 
           {/* LEFT */}
           <div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="flex items-center gap-3 mb-8">
-                <Zap className="w-6 h-6 text-[#2098D0]" />
-                <p className="text-[#95C1D9] font-bold tracking-widest uppercase text-sm">
-                  Core Capabilities
+            {isIOS || shouldReduceMotion ? (
+              <div className="ios-fade-in">
+                <div className="flex items-center gap-3 mb-8">
+                  <Zap className="w-6 h-6 text-[#2098D0]" />
+                  <p className="text-[#95C1D9] font-bold tracking-widest uppercase text-sm">
+                    Core Capabilities
+                  </p>
+                </div>
+
+                <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                  What We<br />Excel At
+                </h2>
+
+                <p className="text-[#95C1D9] text-xl mb-12 leading-relaxed">
+                  Three pillars of innovation, engineered to propel your business forward.
                 </p>
               </div>
+            ) : (
+              <motion.div {...motionProps}>
+                <div className="flex items-center gap-3 mb-8">
+                  <Zap className="w-6 h-6 text-[#2098D0]" />
+                  <p className="text-[#95C1D9] font-bold tracking-widest uppercase text-sm">
+                    Core Capabilities
+                  </p>
+                </div>
 
-              <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                What We<br />Excel At
-              </h2>
+                <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                  What We<br />Excel At
+                </h2>
 
-              <p className="text-[#95C1D9] text-xl mb-12 leading-relaxed">
-                Three pillars of innovation, engineered to propel your business forward.
-              </p>
-            </motion.div>
+                <p className="text-[#95C1D9] text-xl mb-12 leading-relaxed">
+                  Three pillars of innovation, engineered to propel your business forward.
+                </p>
+              </motion.div>
+            )}
 
             {/* SERVICE SELECTOR */}
             <div className="space-y-4">
@@ -128,56 +160,101 @@ export default function FeaturedServices() {
           </div>
 
           {/* RIGHT — SERVICE CARD */}
-          <motion.div
-            key={activeService}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="relative"
-          >
-            <div className="relative bg-white rounded-3xl p-10 md:p-12 shadow-xl">
+          {isIOS || shouldReduceMotion ? (
+            <div key={activeService} className="relative ios-fade-in">
+              <div className="relative bg-white rounded-3xl p-10 md:p-12 shadow-xl">
+                {/* ICON */}
+                <div className="mb-8">
+                  <div
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center"
+                    style={{ backgroundColor: service.color }}
+                  >
+                    {React.createElement(service.icon, {
+                      className: 'w-10 h-10 text-white'
+                    })}
+                  </div>
+                </div>
 
-              {/* ICON */}
-              <div className="mb-8">
-                <div
-                  className="w-20 h-20 rounded-2xl flex items-center justify-center"
+                <h3 className="text-3xl md:text-4xl font-bold text-[#0F2E52] mb-6">
+                  {service.title}
+                </h3>
+
+                <p className="text-[#255490] text-lg mb-8 leading-relaxed">
+                  {service.desc}
+                </p>
+
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {service.features.map((feature, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <div
+                        className="w-2 h-2 rounded-full"
+                        style={{ backgroundColor: service.color }}
+                      />
+                      <span className="text-[#0F2E52] font-medium">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  className="w-full py-4 rounded-xl font-bold text-white flex items-center justify-center gap-2"
                   style={{ backgroundColor: service.color }}
                 >
-                  {React.createElement(service.icon, {
-                    className: 'w-10 h-10 text-white'
-                  })}
-                </div>
+                  Explore Solutions
+                  <ArrowUpRight className="w-5 h-5" />
+                </button>
               </div>
-
-              <h3 className="text-3xl md:text-4xl font-bold text-[#0F2E52] mb-6">
-                {service.title}
-              </h3>
-
-              <p className="text-[#255490] text-lg mb-8 leading-relaxed">
-                {service.desc}
-              </p>
-
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                {service.features.map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    <div
-                      className="w-2 h-2 rounded-full"
-                      style={{ backgroundColor: service.color }}
-                    />
-                    <span className="text-[#0F2E52] font-medium">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <button
-                className="w-full py-4 rounded-xl font-bold text-white flex items-center justify-center gap-2"
-                style={{ backgroundColor: service.color }}
-              >
-                Explore Solutions
-                <ArrowUpRight className="w-5 h-5" />
-              </button>
             </div>
-          </motion.div>
+          ) : (
+            <motion.div
+              key={activeService}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="relative"
+            >
+              <div className="relative bg-white rounded-3xl p-10 md:p-12 shadow-xl">
+                {/* ICON */}
+                <div className="mb-8">
+                  <div
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center"
+                    style={{ backgroundColor: service.color }}
+                  >
+                    {React.createElement(service.icon, {
+                      className: 'w-10 h-10 text-white'
+                    })}
+                  </div>
+                </div>
+
+                <h3 className="text-3xl md:text-4xl font-bold text-[#0F2E52] mb-6">
+                  {service.title}
+                </h3>
+
+                <p className="text-[#255490] text-lg mb-8 leading-relaxed">
+                  {service.desc}
+                </p>
+
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {service.features.map((feature, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <div
+                        className="w-2 h-2 rounded-full"
+                        style={{ backgroundColor: service.color }}
+                      />
+                      <span className="text-[#0F2E52] font-medium">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  className="w-full py-4 rounded-xl font-bold text-white flex items-center justify-center gap-2"
+                  style={{ backgroundColor: service.color }}
+                >
+                  Explore Solutions
+                  <ArrowUpRight className="w-5 h-5" />
+                </button>
+              </div>
+            </motion.div>
+          )}
 
         </div>
       </div>

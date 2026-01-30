@@ -2,21 +2,23 @@
 // import { cn } from '../libs/utils';
 import { MagneticButton } from './ui/MagneticButton';
 import { Boxes } from "./ui/background-boxes";
-import { motion } from 'framer-motion';
+import { useIOSOptimization } from '../utils/useIOSOptimization';
+import { IOSWhileInView } from './IOSMotionWrapper';
 import { useNavigate } from 'react-router-dom';
 export function CTA() {
-
   const navigate = useNavigate();
+  const { isIOS } = useIOSOptimization();
+  
   return <section className="h-screen flex flex-col items-center justify-center bg-[#0F2E52] relative overflow-hidden px-4">
     <div className="absolute inset-0 bg-gradient-to-t from-[#0F2E52] to-[#255490] opacity-50" />
 
     {/* Glow Effect */}
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[#2098D0]/20 blur-[150px] rounded-full pointer-events-none" />
 
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8 }}
+    <IOSWhileInView
+      initial={isIOS ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
+      whileInView={isIOS ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+      transition={isIOS ? { duration: 0.1 } : { duration: 0.8 }}
       className="relative text-center"
     >
       {/* Background animation */}
@@ -36,7 +38,7 @@ export function CTA() {
       }}>
         Start the Conversation
       </MagneticButton>
-    </motion.div>
+    </IOSWhileInView>
 
 
     <footer className="absolute bottom-8 w-full text-center text-[#95C1D9]/40 text-sm">

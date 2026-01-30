@@ -1,7 +1,9 @@
-import  { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Compass, Palette, Code, Rocket, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useIOSOptimization } from '../utils/useIOSOptimization';
+import { useIOSScroll, useIOSTransform } from '../hooks/useIOSScroll';
+import { IOSWhileInView } from './IOSMotionWrapper';
 
 const steps = [
   {
@@ -37,14 +39,13 @@ const steps = [
 ];
 
 export default function Process() {
-  const containerRef = useRef(null);
   const navigate = useNavigate();
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
+  const { isIOS, disableJSAnimations } = useIOSOptimization();
+  const { ref: containerRef, scrollYProgress } = useIOSScroll({
     offset: ['start center', 'end center']
-  });
+  }, isIOS, disableJSAnimations);
 
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const lineHeight = useIOSTransform(scrollYProgress, [0, 1], ['0%', '100%'], isIOS, disableJSAnimations);
 
   return (
     <section className="py-20 md:py-32 px-4 bg-gradient-to-b from-[#FEFEFE] via-[#FAFCFE] to-[#F8FBFD] relative overflow-hidden">
@@ -61,11 +62,10 @@ export default function Process() {
       <div className="max-w-6xl mx-auto relative">
         {/* Header - More Elegant */}
         <div className="mb-20 md:mb-28 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+          <IOSWhileInView
+            initial={isIOS ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isIOS ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={isIOS ? { duration: 0.1 } : { duration: 0.8, ease: "easeOut" }}
           >
             <p className="text-[#0F2E52] font-medium tracking-[0.3em] uppercase text-sm mb-6">
               Methodical Excellence
@@ -77,7 +77,7 @@ export default function Process() {
             <p className="text-[#255490]/80 text-xl max-w-2xl mx-auto font-light">
               A refined methodology for transforming vision into exceptional digital experiences
             </p>
-          </motion.div>
+          </IOSWhileInView>
         </div>
 
         {/* Desktop Version - Elegant Timeline */}
@@ -86,19 +86,22 @@ export default function Process() {
           <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#0F2E52]/20 to-transparent -translate-x-1/2" />
 
           {/* Animated Progress Line with Glow */}
-          <motion.div
-            style={{ height: lineHeight }}
-            className="absolute left-1/2 top-0 w-px bg-gradient-to-b from-[#0F2E52] via-[#2098D0] to-[#95C1D9] -translate-x-1/2 shadow-[0_0_20px_rgba(32,152,208,0.3)]"
-          />
+          {isIOS ? (
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#0F2E52] via-[#2098D0] to-[#95C1D9] -translate-x-1/2 shadow-[0_0_20px_rgba(32,152,208,0.3)]" />
+          ) : (
+            <motion.div
+              style={{ height: lineHeight }}
+              className="absolute left-1/2 top-0 w-px bg-gradient-to-b from-[#0F2E52] via-[#2098D0] to-[#95C1D9] -translate-x-1/2 shadow-[0_0_20px_rgba(32,152,208,0.3)]"
+            />
+          )}
 
           {/* Floating Ornaments */}
           {[...Array(5)].map((_, i) => (
-            <motion.div
+            <IOSWhileInView
               key={i}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.2 }}
+              transition={isIOS ? { duration: 0.1 } : { delay: i * 0.2 }}
               className="absolute left-1/2 w-2 h-2 bg-white border border-[#0F2E52]/30 rounded-full -translate-x-1/2"
               style={{ top: `${20 + i * 20}%` }}
             />
@@ -108,12 +111,12 @@ export default function Process() {
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
-                <motion.div
+                <IOSWhileInView
                   key={index}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  transition={{ duration: 0.8, delay: index * 0.15, ease: "easeOut" }}
+                  initial={isIOS ? { opacity: 0 } : { opacity: 0, y: 40 }}
+                  whileInView={isIOS ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                  viewport={isIOS ? { once: true } : { once: true, margin: '-100px' }}
+                  transition={isIOS ? { duration: 0.1 } : { duration: 0.8, delay: index * 0.15, ease: "easeOut" }}
                   className="relative"
                 >
                   {/* Decorative Connector Line */}
@@ -206,7 +209,7 @@ export default function Process() {
                     {/* Spacer */}
                     <div className="flex-1" />
                   </div>
-                </motion.div>
+                </IOSWhileInView>
               );
             })}
           </div>
@@ -217,12 +220,11 @@ export default function Process() {
           {steps.map((step, index) => {
             const Icon = step.icon;
             return (
-              <motion.div
+              <IOSWhileInView
                 key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                initial={isIOS ? { opacity: 0 } : { opacity: 0, x: -20 }}
+                whileInView={isIOS ? { opacity: 1 } : { opacity: 1, x: 0 }}
+                transition={isIOS ? { duration: 0.1 } : { duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
                 className="relative"
               >
                 {/* Vertical Connector */}
@@ -274,7 +276,7 @@ export default function Process() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </IOSWhileInView>
             );
           })}
         </div>

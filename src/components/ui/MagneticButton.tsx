@@ -15,7 +15,7 @@ export function MagneticButton({
     x: 0,
     y: 0
   });
-  const handleMouseMove = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleMouseMove = (e: any) => {
     const {
       clientX,
       clientY
