@@ -58,14 +58,25 @@
       }
     </script>
 
+  <!-- ✅ GOOGLE ANALYTICS (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9XCHPVKBGZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-9XCHPVKBGZ');
+  </script>
+
+
 </head>
 
 <body>
   <script>
     // Detect iOS immediately before React loads to prevent flash
-    (function() {
+    (function () {
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       if (isIOS) {
         document.documentElement.classList.add('ios-device');
         document.body.classList.add('ios-device');
