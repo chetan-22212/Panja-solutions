@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useIOSOptimization } from '../utils/useIOSOptimization';
 import { useIOSScroll, useIOSTransform } from '../hooks/useIOSScroll';
 import { IOSWhileInView } from './IOSMotionWrapper';
-import { 
-  Globe, Smartphone, Cloud, Cpu, Layout, ArrowRight, CheckCircle, 
-  Megaphone, ShieldCheck, Database, Settings,Search,Grid, List,
+import {
+  Globe, Smartphone, Cloud, Cpu, Layout, ArrowRight, CheckCircle,
+  Megaphone, ShieldCheck, Database, Settings, Search, Grid, List,
   X, // Add this import
   LucideIcon // Import LucideIcon type
 } from 'lucide-react';
@@ -169,26 +169,26 @@ export default function Capabilities() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [searchTerm, setSearchTerm] = useState('');
   const { isIOS, disableJSAnimations } = useIOSOptimization();
-  
+
   const { ref: containerRef, scrollYProgress } = useIOSScroll({
     offset: ["start start", "end start"]
   }, isIOS, disableJSAnimations);
 
- const filteredServices = useMemo(() => 
-  services.filter(service => {
-    const matchesCategory = activeCategory === 'All' || service.category === activeCategory;
-    const matchesSearch = searchTerm === '' || 
-      service.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      service.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      service.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    return matchesCategory && matchesSearch;
-  }),
-  [activeCategory, searchTerm]
-);
+  const filteredServices = useMemo(() =>
+    services.filter(service => {
+      const matchesCategory = activeCategory === 'All' || service.category === activeCategory;
+      const matchesSearch = searchTerm === '' ||
+        service.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        service.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        service.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      return matchesCategory && matchesSearch;
+    }),
+    [activeCategory, searchTerm]
+  );
 
- const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-const backgroundY = useIOSTransform(scrollYProgress, [0, 1], isMobile ? ['0%', '0%'] : ['0%', '50%'], isIOS, disableJSAnimations);
-const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disableJSAnimations);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const backgroundY = useIOSTransform(scrollYProgress, [0, 1], isMobile ? ['0%', '0%'] : ['0%', '50%'], isIOS, disableJSAnimations);
+  const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disableJSAnimations);
 
   // Helper function to get Icon component
   const getServiceIcon = (service: Service) => {
@@ -196,7 +196,7 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
     return <Icon className="w-6 h-6 text-[#0F2E52]" />;
   };
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
 
   return (
@@ -206,7 +206,7 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#2098D0]/10 to-transparent rounded-full blur-[60px] md:blur-[120px]" />
           <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-[#0F2E52]/10 to-transparent rounded-full blur-[120px]" />
-          
+
           {/* Grid Pattern */}
           <div className="absolute inset-0 opacity-[0.02]">
             <div className="absolute inset-0" style={{
@@ -216,13 +216,13 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
           </div>
         </div>
       ) : (
-        <motion.div 
+        <motion.div
           style={{ y: backgroundY, opacity }}
           className="absolute inset-0"
         >
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[#2098D0]/10 to-transparent rounded-full blur-[60px] md:blur-[120px]" />
           <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-[#0F2E52]/10 to-transparent rounded-full blur-[120px]" />
-          
+
           {/* Grid Pattern */}
           <div className="absolute inset-0 opacity-[0.02]">
             <div className="absolute inset-0" style={{
@@ -248,11 +248,11 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
             </span>
             <div className="h-1 w-12 bg-gradient-to-r from-[#2098D0] to-[#0F2E52]" />
           </div>
-          
+
           <h2 className="text-4xl md:text-6xl font-bold text-[#0F2E52] mb-6">
             Technical <span className="text-[#2098D0]">Arsenal</span>
           </h2>
-          
+
           <p className="text-[#255490]/80 text-lg md:text-xl max-w-3xl mx-auto mb-10">
             Discover our comprehensive suite of services designed to transform your digital vision into reality
           </p>
@@ -304,21 +304,19 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
               <div className="flex items-center gap-2 p-1 bg-white/80 backdrop-blur-sm rounded-xl border border-[#0F2E52]/10">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-lg transition-all duration-300 ${
-                    viewMode === 'grid' 
-                      ? 'bg-gradient-to-r from-[#0F2E52] to-[#255490] text-white' 
+                  className={`p-2 rounded-lg transition-all duration-300 ${viewMode === 'grid'
+                      ? 'bg-gradient-to-r from-[#0F2E52] to-[#255490] text-white'
                       : 'text-[#255490]/70 hover:text-[#0F2E52]'
-                  }`}
+                    }`}
                 >
                   <Grid className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-lg transition-all duration-300 ${
-                    viewMode === 'list' 
-                      ? 'bg-gradient-to-r from-[#0F2E52] to-[#255490] text-white' 
+                  className={`p-2 rounded-lg transition-all duration-300 ${viewMode === 'list'
+                      ? 'bg-gradient-to-r from-[#0F2E52] to-[#255490] text-white'
                       : 'text-[#255490]/70 hover:text-[#0F2E52]'
-                  }`}
+                    }`}
                 >
                   <List className="w-5 h-5" />
                 </button>
@@ -332,11 +330,10 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                  activeCategory === category
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${activeCategory === category
                     ? 'bg-gradient-to-r from-[#0F2E52] to-[#255490] text-white shadow-lg'
                     : 'bg-white/80 backdrop-blur-sm text-[#255490] hover:text-[#0F2E52] hover:shadow-md border border-[#0F2E52]/10'
-                }`}
+                  }`}
               >
                 {category}
               </button>
@@ -354,20 +351,19 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
                 initial={isIOS ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
                 animate={isIOS ? { opacity: 1 } : { opacity: 1, scale: 1 }}
                 exit={isIOS ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
-               transition={isIOS ? { duration: 0.1 } : { duration: 0.3, delay: isMobile ? 0 : index * 0.05 }}
+                transition={isIOS ? { duration: 0.1 } : { duration: 0.3, delay: isMobile ? 0 : index * 0.05 }}
                 onClick={() => setSelectedService(service)}
-                className={`group cursor-pointer ${
-                  viewMode === 'grid' 
-                    ? 'h-full' 
+                className={`group cursor-pointer ${viewMode === 'grid'
+                    ? 'h-full'
                     : 'flex items-center gap-6 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border-2 border-[#0F2E52]/10 hover:border-[#2098D0]/30 hover:shadow-xl transition-all duration-300'
-                }`}
+                  }`}
               >
                 {viewMode === 'grid' ? (
                   // Grid Card View
                   <div className="relative h-full bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden border-2 border-[#0F2E52]/10 hover:border-[#2098D0]/30 hover:shadow-2xl transition-all duration-500 group">
                     {/* Gradient Background */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                    
+
                     {/* Header */}
                     <div className="p-6">
                       <div className="flex items-start justify-between mb-4">
@@ -385,7 +381,7 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
                           <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-500`} />
                         </div>
                       </div>
-                      
+
                       <p className="text-[#255490]/70 text-sm mb-6 line-clamp-3">
                         {service.description}
                       </p>
@@ -439,7 +435,7 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
                         {getServiceIcon(service)}
                       </div>
                     </div>
-                    
+
                     <div className="flex-1">
                       <div className="flex items-start justify-between mb-2">
                         <div>
@@ -453,11 +449,11 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
                           <div className="text-xs text-[#255490]/60">{service.statLabel}</div>
                         </div>
                       </div>
-                      
+
                       <p className="text-[#255490]/70 mb-4 line-clamp-2">
                         {service.description}
                       </p>
-                      
+
                       <div className="flex flex-wrap gap-2">
                         {service.tags.slice(0, 4).map((tag, idx) => (
                           <span
@@ -492,9 +488,9 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
                 Let's discuss how our comprehensive service portfolio can drive your business forward
               </p>
             </div>
-            <button onClick={()=> {
-                   navigate('/contact')
-            }}   className="px-10 py-4 bg-gradient-to-r from-[#0F2E52] to-[#255490] text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-3 whitespace-nowrap">
+            <button onClick={() => {
+              navigate('/contact')
+            }} className="px-10 py-4 bg-gradient-to-r from-[#0F2E52] to-[#255490] text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-3 whitespace-nowrap">
               Start Collaboration
               <ArrowRight className="w-5 h-5" />
             </button>
@@ -513,7 +509,7 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
               onClick={() => setSelectedService(null)}
               className="fixed inset-0 z-50 bg-black/50 md:backdrop-blur-sm"
             />
-            
+
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -535,7 +531,7 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
                       <X className="w-6 h-6" />
                     </button>
                   </div>
-                  
+
                   <div className="flex items-center gap-6">
                     <div className="flex items-center gap-4">
                       <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center">
@@ -557,7 +553,7 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
                       <p className="text-[#255490] leading-relaxed">
                         {selectedService.description}
                       </p>
-                      
+
                       <div className="mt-8">
                         <h4 className="text-xl font-bold text-[#0F2E52] mb-4">Technologies</h4>
                         <div className="flex flex-wrap gap-3">
@@ -572,7 +568,7 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
                         </div>
                       </div>
                     </div>
-                    
+
                     <div>
                       <h4 className="text-xl font-bold text-[#0F2E52] mb-4">Key Features</h4>
                       <ul className="space-y-4">
@@ -589,10 +585,14 @@ const opacity = useIOSTransform(scrollYProgress, [0, 0.5], [1, 1], isIOS, disabl
                           </li>
                         ))}
                       </ul>
-                      
+
                       <div className="mt-8 p-6 bg-gradient-to-r from-[#0F2E52]/5 to-[#2098D0]/5 rounded-2xl">
                         <h4 className="text-xl font-bold text-[#0F2E52] mb-4">Ready to get started?</h4>
-                        <button className="w-full py-4 bg-gradient-to-r from-[#0F2E52] to-[#255490] text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-300">
+                        <button
+                          onClick={() => {
+                            navigate('/contact')
+                          }}
+                          className="w-full py-4 bg-gradient-to-r from-[#0F2E52] to-[#255490] text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-300">
                           Schedule a Consultation
                         </button>
                       </div>

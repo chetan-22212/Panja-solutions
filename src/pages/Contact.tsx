@@ -24,7 +24,7 @@ export function Contact() {
           alert("Message sent successfully!");
           formRef.current?.reset();
         },
-        (error : any) => {
+        (error: any) => {
           console.error(error);
           alert("Failed to send message!");
         }
@@ -81,40 +81,60 @@ export function Contact() {
             story and let's engineer something extraordinary.
           </motion.p>
 
-          <div className="space-y-8">
-            <div className="flex items-start gap-6">
-              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 border border-white/10 backdrop-blur-sm">
-                <Mail className="text-[#2098D0]" size={20} />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold mb-1">Email Us</h3>
-                <p className="text-[#95C1D9]/60">info@panjasolutions.com</p>
-                {/* <p className="text-[#95C1D9]/60">careers@panja.tech</p> */}
-              </div>
-            </div>
+        <div className="space-y-8">
 
-            <div className="flex items-start gap-6">
-              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 border border-white/10 backdrop-blur-sm">
-                <MapPin className="text-[#2098D0]" size={20} />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold mb-1">Visit Us</h3>
-                <p className="text-[#95C1D9]/60">7, Arman Arcade, near Moti Saak market,</p>
-                <p className="text-[#95C1D9]/60"> Samarkha Chokdi. Anand.388001</p>
-              </div>
-            </div>
+  {/* EMAIL */}
+  <div className="flex items-start gap-6">
+    <a
+      href="mailto:info@panjasolutions.com"
+      className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition cursor-pointer"
+    >
+      <Mail className="text-[#2098D0]" size={20} />
+    </a>
 
-            <div className="flex items-start gap-6">
-              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 border border-white/10 backdrop-blur-sm">
-                <Phone className="text-[#2098D0]" size={20} />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold mb-1">Call Us</h3>
-                <p className="text-[#95C1D9]/60">+91 7778024448</p>
-                <p className="text-[#95C1D9]/60">Mon-Fri, 9am-6pm PST</p>
-              </div>
-            </div>
-          </div>
+    <div>
+      <h3 className="text-lg font-bold mb-1">Email Us</h3>
+      <p className="text-[#95C1D9]/60">info@panjasolutions.com</p>
+    </div>
+  </div>
+
+
+  {/* ADDRESS */}
+  <div className="flex items-start gap-6">
+    <a
+      href="https://www.google.com/maps/search/?api=1&query=7+Arman+Arcade+near+Moti+Saak+Market+Samarkha+Chokdi+Anand+388001"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition cursor-pointer"
+    >
+      <MapPin className="text-[#2098D0]" size={20} />
+    </a>
+
+    <div>
+      <h3 className="text-lg font-bold mb-1">Visit Us</h3>
+      <p className="text-[#95C1D9]/60">7, Arman Arcade, near Moti Saak market,</p>
+      <p className="text-[#95C1D9]/60">Samarkha Chokdi, Anand 388001</p>
+    </div>
+  </div>
+
+
+  {/* PHONE */}
+  <div className="flex items-start gap-6">
+    <a
+      href="tel:+917778024448"
+      className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition cursor-pointer"
+    >
+      <Phone className="text-[#2098D0]" size={20} />
+    </a>
+
+    <div>
+      <h3 className="text-lg font-bold mb-1">Call Us</h3>
+      <p className="text-[#95C1D9]/60">+91 7778024448</p>
+      <p className="text-[#95C1D9]/60">Mon-Fri, 9am-6pm PST</p>
+    </div>
+  </div>
+
+</div>
         </div>
 
         {/* Form Column */}
@@ -134,13 +154,13 @@ export function Contact() {
                 <label className="text-sm font-medium text-[#95C1D9]">
                   Name
                 </label>
-                <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#2098D0] transition-colors"  />
+                <input type="text" className="w-full bg-white/5 border border-[#2098D0]/40 rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#2098D0] transition-colors" />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#95C1D9]">
                   Email
                 </label>
-                <input type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#2098D0] transition-colors"  />
+                <input type="email" className="w-full bg-white/5 border border-[#2098D0]/40  rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#2098D0] transition-colors" />
               </div>
             </div>
 
@@ -148,7 +168,7 @@ export function Contact() {
               <label className="text-sm font-medium text-[#95C1D9]">
                 Subject
               </label>
-              <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#2098D0] transition-colors appearance-none">
+              <select className="w-full bg-white/5 border border-[#2098D0]/40  rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#2098D0] transition-colors appearance-none">
                 <option className="bg-[#0F2E52]">New Project Inquiry</option>
                 <option className="bg-[#0F2E52]">Partnership</option>
                 <option className="bg-[#0F2E52]">Careers</option>
@@ -160,7 +180,7 @@ export function Contact() {
               <label className="text-sm font-medium text-[#95C1D9]">
                 Message
               </label>
-              <textarea rows={4} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#2098D0] transition-colors resize-none" placeholder="Tell us about your project..." />
+              <textarea rows={4} className="w-full bg-white/5 border border-[#2098D0]/40  rounded-xl px-4 py-3 text-black focus:outline-none focus:border-[#2098D0] transition-colors resize-none" placeholder="Tell us about your project..." />
             </div>
 
             <MagneticButton className="w-full bg-[#2098D0] text-white hover:bg-[#255490] mt-4">

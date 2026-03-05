@@ -73,9 +73,11 @@ export function Footer() {
             Contact
           </h4>
           <ul className="space-y-4 mb-8">
-            <li className="text-[#95C1D9]/60">panjasolutions@gmail.com</li>
-            <li className="text-[#95C1D9]/60">+91 777 802 4448</li>
-            <li className="text-[#95C1D9]/60">7, Arman Arcade, near Moti Saak market, Samarkha Chokdi. Anand.388001</li>
+            <li  className="text-[#95C1D9]/60"> <a href="mailto:info@panjasolutions.com">panjasolutions@gmail.com</a></li>
+
+            <li className="text-[#95C1D9]/60" > <a  href="tel:+917778024448">+91 777 802 4448</a></li>
+            <li className="text-[#95C1D9]/60"> <a   href="https://www.google.com/maps/search/?api=1&query=7+Arman+Arcade+near+Moti+Saak+Market+Samarkha+Chokdi+Anand+388001"
+      target="_blank">7, Arman Arcade, near Moti Saak market, Samarkha Chokdi. Anand.388001</a></li>
           </ul>
           <Link to="/contact">
             <MagneticButton className="bg-[#2098D0] text-white px-6 py-3 text-sm" onClick={() => {

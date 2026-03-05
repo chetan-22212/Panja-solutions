@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Brain, Bug, Code2, ArrowUpRight, Zap } from 'lucide-react';
 import { useIOSOptimization } from '../utils/useIOSOptimization';
+import { useNavigate } from 'react-router-dom';
 
 const coreServices = [
   {
@@ -34,6 +35,7 @@ export default function FeaturedServices() {
   const [activeService, setActiveService] = useState(0);
   const shouldReduceMotion = useReducedMotion();
   const { isIOS } = useIOSOptimization();
+  const navigate = useNavigate();
 
   const isMobile = useMemo(() => {
     if (typeof window === 'undefined') return false;
@@ -41,21 +43,21 @@ export default function FeaturedServices() {
   }, []);
 
   const service = coreServices[activeService];
-  
+
   // Simplified animation config for iOS
   const motionProps = isIOS || shouldReduceMotion
     ? {
-        initial: { opacity: 0 },
-        whileInView: { opacity: 1 },
-        viewport: { once: true },
-        transition: { duration: 0.2, ease: 'easeOut' },
-      }
+      initial: { opacity: 0 },
+      whileInView: { opacity: 1 },
+      viewport: { once: true },
+      transition: { duration: 0.2, ease: 'easeOut' },
+    }
     : {
-        initial: { opacity: 0, y: 30 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true },
-        transition: { duration: 0.5 },
-      };
+      initial: { opacity: 0, y: 30 },
+      whileInView: { opacity: 1, y: 0 },
+      viewport: { once: true },
+      transition: { duration: 0.5 },
+    };
 
   return (
     <section className="relative min-h-screen flex items-center py-20 px-6 bg-[#0F2E52] overflow-hidden">
@@ -119,38 +121,33 @@ export default function FeaturedServices() {
                 <button
                   key={index}
                   onClick={() => setActiveService(index)}
-                  className={`w-full text-left transition-all duration-300 ${
-                    activeService === index ? 'scale-[1.02]' : ''
-                  }`}
+                  className={`w-full text-left transition-all duration-300 ${activeService === index ? 'scale-[1.02]' : ''
+                    }`}
                 >
                   <div
-                    className={`pl-8 pr-6 py-6 border-l-4 transition-all duration-300 ${
-                      activeService === index
+                    className={`pl-8 pr-6 py-6 border-l-4 transition-all duration-300 ${activeService === index
                         ? 'border-[#2098D0] bg-[#2098D0]/10'
                         : 'border-white/10 hover:border-white/30'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-4">
                       <span
-                        className={`text-5xl font-bold ${
-                          activeService === index ? 'text-[#2098D0]' : 'text-white/30'
-                        }`}
+                        className={`text-5xl font-bold ${activeService === index ? 'text-[#2098D0]' : 'text-white/30'
+                          }`}
                       >
                         {s.number}
                       </span>
 
                       <h3
-                        className={`text-xl font-bold flex-1 ${
-                          activeService === index ? 'text-white' : 'text-white/70'
-                        }`}
+                        className={`text-xl font-bold flex-1 ${activeService === index ? 'text-white' : 'text-white/70'
+                          }`}
                       >
                         {s.title}
                       </h3>
 
                       <ArrowUpRight
-                        className={`w-5 h-5 transition-transform ${
-                          activeService === index ? 'rotate-0 text-[#2098D0]' : '-rotate-45 text-white/40'
-                        }`}
+                        className={`w-5 h-5 transition-transform ${activeService === index ? 'rotate-0 text-[#2098D0]' : '-rotate-45 text-white/40'
+                          }`}
                       />
                     </div>
                   </div>
@@ -198,6 +195,9 @@ export default function FeaturedServices() {
                 <button
                   className="w-full py-4 rounded-xl font-bold text-white flex items-center justify-center gap-2"
                   style={{ backgroundColor: service.color }}
+                  onClick={() => {
+                    navigate('/services')
+                  }}
                 >
                   Explore Solutions
                   <ArrowUpRight className="w-5 h-5" />
@@ -248,6 +248,9 @@ export default function FeaturedServices() {
                 <button
                   className="w-full py-4 rounded-xl font-bold text-white flex items-center justify-center gap-2"
                   style={{ backgroundColor: service.color }}
+                  onClick={() => {
+                    navigate('/services')
+                  }}
                 >
                   Explore Solutions
                   <ArrowUpRight className="w-5 h-5" />

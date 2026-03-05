@@ -1,6 +1,6 @@
 // import React from 'react';
 import { motion } from 'framer-motion';
-import { Brain, TrendingUp, Code2, Cloud, Smartphone, Layout, ArrowRight, CheckCircle, Sparkles } from 'lucide-react';
+import { Brain, TrendingUp, Code2, Cloud, Smartphone, Layout,  CheckCircle, Sparkles } from 'lucide-react';
 import { MagneticButton } from '../components/ui/MagneticButton';
 import { LampContainer } from "../components/ui/Lamp";
 const services = [{
@@ -151,7 +151,7 @@ export function Services() {
 
           <div className="relative pt-6 border-t border-[#0F2E52]/10">
             <button className="flex items-center gap-2 text-[#2098D0] font-medium group-hover:gap-3 transition-all">
-              Learn more <ArrowRight size={16} />
+              {/* Learn more <ArrowRight size={16} /> */}
             </button>
           </div>
         </motion.div>)}
