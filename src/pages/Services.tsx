@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Brain, TrendingUp, Code2, Cloud, Smartphone, Layout,  CheckCircle, Sparkles } from 'lucide-react';
 import { MagneticButton } from '../components/ui/MagneticButton';
 import { LampContainer } from "../components/ui/Lamp";
+import { useNavigate } from 'react-router-dom';
 const services = [{
   icon: Brain,
   title: 'AI / Machine Learning Solutions',
@@ -50,6 +51,8 @@ const services = [{
   featured: false
 },];
 export function Services() {
+ const navigate = useNavigate();
+
   return <motion.div initial={{
     opacity: 0
   }} animate={{
@@ -169,7 +172,11 @@ export function Services() {
               Let's discuss how our engineering expertise can solve your
               unique challenges.
             </p>
-            <MagneticButton className="bg-white text-[#0F2E52] hover:bg-[#95C1D9]">
+            <MagneticButton
+            onClick={() => {
+                  navigate('/contact')
+                }}
+            className="bg-white text-[#0F2E52] hover:bg-[#95C1D9]">
               Start a Conversation
             </MagneticButton>
           </LampContainer>
